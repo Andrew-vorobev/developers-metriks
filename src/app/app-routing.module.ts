@@ -14,8 +14,7 @@ const routes: Routes = [
   },
   {
     path: 'static',
-    loadChildren: () =>
-      import('./static/static.module').then(m => m.StaticModule),
+    loadChildren: () => import('./stats/stats.module').then(m => m.StatsModule),
   },
   {
     path: 'compare',
