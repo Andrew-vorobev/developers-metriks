@@ -1,0 +1,15 @@
+.menu li{
+    list-style: none;
+}
+.logo{
+    text-align: center;
+}
+.menu li{
+    margin-bottom: 35px;
+}
+main{
+    display: flex;
+}
+main .router{
+    margin-left: 240px;
+}

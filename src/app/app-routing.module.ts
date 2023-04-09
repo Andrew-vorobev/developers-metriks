@@ -1,27 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PopComponent } from './pop/pop.component';
 import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
-  { path: '', component: PopComponent },
   {
     path: 'auth',
-    loadChildren: () => import('./autf/aut.module').then(m => m.AutModule),
-  },
-  {
-    path: 'static',
     loadChildren: () =>
-      import('./static/static.module').then(m => m.StaticModule),
+      import('./modules/auth/auth.module').then(m => m.AuthModule),
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomeModule),
+    loadChildren: () =>
+      import('./modules/home/home.module').then(m => m.HomeModule),
   },
   {
     path: 'compare',
     loadChildren: () =>
-      import('./compare/compare.module').then(m => m.CompareModule),
+      import('./modules/compare/compare.module').then(m => m.CompareModule),
   },
   { path: '**', component: NotfoundComponent },
 ];
