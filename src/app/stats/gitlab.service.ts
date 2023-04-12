@@ -52,8 +52,8 @@ export class GitlabService {
       order?: 'default' | 'topo';
       all?: boolean;
     }
-  ): Observable<any> {
-    return this.httpClient.get<any>(
+  ): Observable<never> {
+    return this.httpClient.get<never>(
       `https://gitlab.com/api/v4/projects/${repoId}/repository/commits`,
       {
         headers: {
@@ -75,8 +75,8 @@ export class GitlabService {
       | 'updated_at'
       | 'last_activity_at'
       | 'similarity';
-  }): Observable<any> {
-    return this.httpClient.get<any>(`https://gitlab.com/api/v4/projects`, {
+  }): Observable<never> {
+    return this.httpClient.get<never>(`https://gitlab.com/api/v4/projects`, {
       headers: {
         'PRIVATE-TOKEN': 'glpat-zPMgUWVA7dKdxZ7dGzn2',
       },
