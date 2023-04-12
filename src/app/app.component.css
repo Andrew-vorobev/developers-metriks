@@ -1,15 +1,10 @@
-.menu li{
-    list-style: none;
+*,
+*:after,
+*:before {
+  box-sizing: border-box;
 }
-.logo{
-    text-align: center;
-}
-.menu li{
-    margin-bottom: 35px;
-}
-main{
-    display: flex;
-}
-main .router{
-    margin-left: 240px;
+
+p, h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
 }

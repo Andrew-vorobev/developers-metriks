@@ -1,9 +1,37 @@
-<div class="logo"><h3>Developer metrict</h3></div>
-<main>
-  <ul class="menu">
-    <li><a routerLink="home">На главную</a></li>
-    <li><a routerLink="compare">Сравнение</a></li>
-    <li><a routerLink="auth">Личный кабинет</a></li>
-  </ul>
-  <router-outlet class="router"></router-outlet>
+<header>
+  <div class="container mx-auto py-6">
+    <div class="flex justify-between align-middle">
+      <a routerLink="">
+        <h1 class="font-extrabold uppercase text-2xl">Developer metrics</h1>
+      </a>
+      <nav>
+        <ul class="flex gap-12">
+          <li>
+            <a routerLink="" class="text-lg cursor-pointer">На&nbsp;главную</a>
+          </li>
+          <li>
+            <a routerLink="compare" class="text-lg cursor-pointer">Сравнение</a>
+          </li>
+          <li *ngIf="!isLogged">
+            <button (click)="onLogin()" class="text-lg cursor-pointer">
+              Войти
+            </button>
+          </li>
+          <li>
+            <button (click)="onCheck()" class="text-lg cursor-pointer">
+              Check
+            </button>
+          </li>
+          <li *ngIf="isLogged">
+            <button (click)="onLogOut()" class="text-lg cursor-pointer">
+              Выйти
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
+<main class="container mx-auto py-6">
+  <router-outlet class="w-full"></router-outlet>
 </main>
