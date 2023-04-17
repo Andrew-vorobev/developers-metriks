@@ -17,14 +17,14 @@
               Войти
             </button>
           </li>
-          <li>
-            <button (click)="onCheck()" class="text-lg cursor-pointer">
-              Check
-            </button>
-          </li>
           <li *ngIf="isLogged">
             <button (click)="onLogOut()" class="text-lg cursor-pointer">
               Выйти
+            </button>
+          </li>
+          <li>
+            <button (click)="onCheck()" class="text-lg cursor-pointer">
+              Check
             </button>
           </li>
         </ul>
