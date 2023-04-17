@@ -27,6 +27,7 @@ export class AppComponent implements OnInit {
 
   onLogOut() {
     this.OAuthService.logOut();
+    this.OAuthService.revokeTokenAndLogout().then(el => console.log(el));
     this.isLogged = false;
   }
 

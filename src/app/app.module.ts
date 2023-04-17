@@ -15,7 +15,12 @@ import { OAuthModule } from 'angular-oauth2-oidc';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['https://gitlab.com'],
+        sendAccessToken: true,
+      },
+    }),
   ],
   providers: [GitlabService],
   bootstrap: [AppComponent],

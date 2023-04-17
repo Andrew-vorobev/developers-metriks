@@ -6,7 +6,7 @@ export const authCodeFlowConfig: AuthConfig = {
   // checkOrigin: false,
   strictDiscoveryDocumentValidation: false,
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + '/auth',
+  redirectUri: window.location.origin,
   responseType: 'code',
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',
