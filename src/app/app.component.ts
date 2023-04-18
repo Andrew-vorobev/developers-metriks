@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from './authCodeFlowConfig';
+import { GitlabAuthService } from './gitlab-auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,28 +8,23 @@ import { authCodeFlowConfig } from './authCodeFlowConfig';
 })
 export class AppComponent implements OnInit {
   protected isLogged: boolean;
-  constructor(private OAuthService: OAuthService) {}
+  constructor(private gitlabAuthService: GitlabAuthService) {}
 
-  ngOnInit(): void {
-    this.OAuthService.configure(authCodeFlowConfig);
-    this.OAuthService.loadDiscoveryDocumentAndTryLogin().then(e =>
-      console.log(e)
-    );
-    this.isLogged = this.OAuthService.hasValidAccessToken();
+  ngOnInit() {
+    this.gitlabAuthService.isLogged.subscribe(value => {
+      this.isLogged = value;
+    });
   }
 
   onLogin() {
-    this.isLogged = true;
-    this.OAuthService.setupAutomaticSilentRefresh();
-    this.OAuthService.initCodeFlow();
+    this.gitlabAuthService.login();
   }
 
   onLogOut() {
-    this.OAuthService.logOut();
-    this.isLogged = false;
+    this.gitlabAuthService.logout();
   }
 
   onCheck() {
-    console.log(this.OAuthService.hasValidAccessToken());
+    console.log(this.gitlabAuthService.isLogged);
   }
 }

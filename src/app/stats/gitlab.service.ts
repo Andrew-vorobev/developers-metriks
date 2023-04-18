@@ -20,29 +20,25 @@ export class GitlabService {
   }): Observable<UserDto[]> {
     return this.httpClient.get<UserDto[]>('https://gitlab.com/api/v4/users', {
       params: options,
-      headers: {
-        Authorization: 'Bearer ' + this.OAuthService.getAccessToken(),
-      },
     });
   }
 
   getUser(userID: number): Observable<UserExtraDto> {
     return this.httpClient.get<UserExtraDto>(
       `https://gitlab.com/api/v4/users/${userID}`,
-      {
-        headers: {
-          'PRIVATE-TOKEN': 'Bearer ' + this.OAuthService.getAccessToken(),
-        },
-      }
+      {}
     );
   }
 
   getProfileData(): Observable<UserExtraDto> {
-    return this.httpClient.get<UserExtraDto>(`https://gitlab.com/api/v4/user`, {
-      headers: {
-        'PRIVATE-TOKEN': 'glpat-zPMgUWVA7dKdxZ7dGzn2',
-      },
-    });
+    return this.httpClient.get<UserExtraDto>(
+      `https://gitlab.com/api/v4/user`,
+      {}
+    );
+  }
+
+  getData<T>(): Observable<T> {
+    return this.httpClient.get<T>('');
   }
 
   getCommits(
@@ -56,9 +52,6 @@ export class GitlabService {
     return this.httpClient.get<never>(
       `https://gitlab.com/api/v4/projects/${repoId}/repository/commits`,
       {
-        headers: {
-          'PRIVATE-TOKEN': 'glpat-zPMgUWVA7dKdxZ7dGzn2',
-        },
         params: params,
       }
     );
@@ -77,9 +70,6 @@ export class GitlabService {
       | 'similarity';
   }): Observable<never> {
     return this.httpClient.get<never>(`https://gitlab.com/api/v4/projects`, {
-      headers: {
-        'PRIVATE-TOKEN': 'glpat-zPMgUWVA7dKdxZ7dGzn2',
-      },
       params: params,
     });
   }

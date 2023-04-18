@@ -26,7 +26,12 @@ import { ERROR_LOGGER } from './errors/error-handler/error-logger.interface';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    OAuthModule.forRoot(),
+    OAuthModule.forRoot({
+      resourceServer: {
+        allowedUrls: ['https://gitlab.com/api'],
+        sendAccessToken: true,
+      },
+    }),
   ],
   providers: [
     GitlabService,

@@ -5,14 +5,15 @@ export const authCodeFlowConfig: AuthConfig = {
   issuer: 'https://gitlab.com',
   // checkOrigin: false,
   strictDiscoveryDocumentValidation: false,
+
   // URL of the SPA to redirect the user to after login
-  redirectUri: window.location.origin + '/auth',
+  redirectUri: window.location.origin + '/',
   responseType: 'code',
   // The SPA's id. The SPA is registerd with this id at the auth-server
   // clientId: 'server.code',
-  clientId: '5a196ef9575e63dc28676d5c1def1d26f867b6bc008895fce019fdc1360ab7e6',
+  clientId: 'bba4f0499d8031d8d0341c56df3fbc43370348ad9732fed76bdb41ac403a63cb',
   dummyClientSecret:
-    '4371de8d5f894bad7d667a719c1d476190b0653be57f2835632d36d90a09a378',
+    '66d89f946362ab782e3a3bbadafaed5704c99f118d55c713307aa6ae8d251845',
 
   // Just needed if your auth server demands a secret. In general, this
   // is a sign that the auth server is not configured with SPAs in mind
@@ -28,5 +29,5 @@ export const authCodeFlowConfig: AuthConfig = {
   // The api scope is a usecase specific one
   scope: 'read_api openid email profile api',
 
-  showDebugInformation: true,
+  showDebugInformation: false,
 };
