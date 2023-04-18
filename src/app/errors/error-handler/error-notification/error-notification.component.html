@@ -1,0 +1,14 @@
+<div *ngIf="error" [class]="elClassList" id="error-notification">
+  <div class="error-notification__desc">
+    <h2 class="error-notification__title">Что-то пошло не так!</h2>
+    <p *ngIf="httpResponseErrorMessage" class="error-notification__status">
+      {{ httpResponseErrorMessage }}
+    </p>
+    <p class="error-notification__message">
+      {{ error.message }}
+    </p>
+  </div>
+  <button (click)="hideNotification()" class="error-notification__btn">
+    Закрыть
+  </button>
+</div>
