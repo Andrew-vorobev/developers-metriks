@@ -1,0 +1,21 @@
+<div class="max-w-2xl mx-auto">
+  <app-login-preview
+    [isLoggedIn]="
+      this.gitlabAuthService.hasValidAccessToken()
+    "></app-login-preview>
+
+  <button
+    *ngIf="!this.gitlabAuthService.hasValidAccessToken(); else logoutBtn"
+    (click)="onLogin()"
+    class="cursor-pointer border-2 border-black bg-black text-white w-full p-4 rounded-2xl font-bold hover:bg-white hover:text-black transition-all">
+    Войти
+  </button>
+</div>
+
+<ng-template #logoutBtn>
+  <button
+    (click)="onLogout()"
+    class="cursor-pointer border-2 border-black bg-black text-white w-full p-4 rounded-2xl font-bold hover:bg-white hover:text-black transition-all">
+    Выйти
+  </button>
+</ng-template>
