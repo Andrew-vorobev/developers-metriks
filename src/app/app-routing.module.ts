@@ -4,6 +4,11 @@ import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./modules/auth/auth.module').then(m => m.AuthModule),
+  },
+  {
     path: 'static',
     loadChildren: () => import('./stats/stats.module').then(m => m.StatsModule),
   },
@@ -22,7 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: true })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}

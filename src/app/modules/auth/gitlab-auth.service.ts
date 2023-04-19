@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OAuthService } from 'angular-oauth2-oidc';
-import { authCodeFlowConfig } from './authCodeFlowConfig';
+import { authCodeFlowConfig } from '../../authCodeFlowConfig';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
@@ -16,15 +16,19 @@ export class GitlabAuthService {
     this.isLogged.next(oAuthService.hasValidAccessToken());
   }
 
-  login() {
+  public login() {
     this.oAuthService.setupAutomaticSilentRefresh();
     this.oAuthService.initCodeFlow();
     this.isLogged.next(this.oAuthService.hasValidAccessToken());
   }
 
-  logout() {
+  public logout() {
     this.oAuthService.revokeTokenAndLogout().then(() => {
       this.isLogged.next(this.oAuthService.hasValidAccessToken());
     });
+  }
+
+  public hasValidAccessToken() {
+    return this.oAuthService.hasValidAccessToken();
   }
 }
