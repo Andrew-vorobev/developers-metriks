@@ -12,19 +12,9 @@
           <li>
             <a routerLink="compare" class="text-lg cursor-pointer">Сравнение</a>
           </li>
-          <li *ngIf="!isLogged">
-            <button (click)="onLogin()" class="text-lg cursor-pointer">
-              Войти
-            </button>
-          </li>
-          <li *ngIf="isLogged">
-            <button (click)="onLogOut()" class="text-lg cursor-pointer">
-              Выйти
-            </button>
-          </li>
           <li>
-            <button (click)="onCheck()" class="text-lg cursor-pointer">
-              Check
+            <button routerLink="auth" class="text-lg cursor-pointer">
+              Авторизация
             </button>
           </li>
         </ul>
