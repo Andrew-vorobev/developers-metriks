@@ -15,9 +15,9 @@ import {
   providedIn: 'root',
 })
 export class HttpInterceptorService implements HttpInterceptor {
-  constructor(@Inject(ERROR_LOGGER) private errorLogger: IErrorLogger) {}
+  constructor(@Inject(ERROR_LOGGER) private _errorLogger: IErrorLogger) {}
 
-  intercept(
+  public intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {

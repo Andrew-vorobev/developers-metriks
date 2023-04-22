@@ -6,10 +6,10 @@ import { Observable, Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class ErrorNotificationService implements IErrorLogger {
-  private notify: Subject<Error> = new Subject<Error>();
-  public notified$: Observable<Error> = this.notify.asObservable();
+  private _notify: Subject<Error> = new Subject<Error>();
+  public notified$: Observable<Error> = this._notify.asObservable();
 
-  log(error: Error): void {
-    this.notify.next(error);
+  public log(error: Error): void {
+    this._notify.next(error);
   }
 }

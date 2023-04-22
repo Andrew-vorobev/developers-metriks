@@ -14,6 +14,7 @@ import { ErrorNotificationService } from './errors/error-handler/error-notificat
 import { ErrorNotificationComponent } from './errors/error-handler/error-notification/error-notification.component';
 import { HttpInterceptorService } from './errors/http-interceptor/http-Interceptor.service';
 import { ERROR_LOGGER } from './errors/error-handler/error-logger.interface';
+import { CompareFormComponent } from './modules/compare/compare-form/compare-form.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ERROR_LOGGER } from './errors/error-handler/error-logger.interface';
     PopComponent,
     NotfoundComponent,
     ErrorNotificationComponent,
+    CompareFormComponent,
   ],
   imports: [
     BrowserModule,
