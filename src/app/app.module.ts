@@ -3,9 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { PopComponent } from './pop/pop.component';
 import { NotfoundComponent } from './notfound/notfound.component';
-import { GitlabService } from './stats/gitlab.service';
+import { GitlabService } from './statistics/gitlab.service';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { OAuthModule } from 'angular-oauth2-oidc';
 import { GlobalErrorHandlerService } from './errors/error-handler/global-error-handler.service';
@@ -16,12 +15,7 @@ import { HttpInterceptorService } from './errors/http-interceptor/http-Intercept
 import { ERROR_LOGGER } from './errors/error-handler/error-logger.interface';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    PopComponent,
-    NotfoundComponent,
-    ErrorNotificationComponent,
-  ],
+  declarations: [AppComponent, NotfoundComponent, ErrorNotificationComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
