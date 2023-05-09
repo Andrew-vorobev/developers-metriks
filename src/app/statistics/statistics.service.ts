@@ -8,8 +8,8 @@ import { map, mergeAll, mergeMap, reduce, tap } from 'rxjs';
 export class StatisticsService {
   constructor(private gitlabService: GitlabService) {}
 
-  public getCommitsCount() {
-    return this.gitlabService.getEvents({ action: 'pushed' }).pipe(
+  public getCommitsCount(authorId?: string) {
+    return this.gitlabService.getEvents({ action: 'pushed', authorId }).pipe(
       tap(co => console.log(co)),
       mergeAll(),
       map(data => data.push_data.commit_count),
@@ -17,8 +17,8 @@ export class StatisticsService {
     );
   }
 
-  public getMostActiveWeekDay() {
-    return this.gitlabService.getEvents().pipe(
+  public getMostActiveWeekDay(authorId?: string) {
+    return this.gitlabService.getEvents({ authorId }).pipe(
       tap(ev => console.log(ev)),
       mergeAll(),
       map(event => new Date(event.created_at).getUTCDay()),
@@ -39,7 +39,14 @@ export class StatisticsService {
       mergeMap(project => {
         return this.gitlabService.getCommitsExtended(project.id);
       }),
-      tap(e => console.log(e))
+      mergeAll(),
+      reduce(
+        (data: number[], commit) => {
+          const stats = commit.stats;
+          return [data[0] + stats.additions, data[1] + stats.deletions];
+        },
+        [0, 0]
+      )
     );
   }
 }

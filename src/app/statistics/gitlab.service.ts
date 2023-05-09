@@ -22,6 +22,7 @@ import { PushedEventDto } from './dto/pushed-event.dto';
 import { CommitExtraDto } from './dto/commit-extra.dto';
 
 interface IEventParams {
+  authorId?: string;
   action?: string;
 }
 
@@ -33,7 +34,9 @@ export class GitlabService {
 
   getEvents(params?: IEventParams) {
     return this.httpClient.get<PushedEventDto[]>(
-      `https://gitlab.com/api/v4/events`,
+      `https://gitlab.com/api/v4/${
+        params?.authorId ? `users/${params.authorId}/events` : 'events'
+      }`,
       {
         params: {
           ...params,
@@ -107,6 +110,7 @@ export class GitlabService {
 
   public getProjects(params?: {
     membership?: boolean;
+    authorId?: string;
     owned?: boolean;
     visibility?: 'public' | 'internal' | 'private';
     order_by?:
@@ -119,7 +123,9 @@ export class GitlabService {
       | 'similarity';
   }): Observable<ProjectDto[]> {
     return this.httpClient.get<ProjectDto[]>(
-      `https://gitlab.com/api/v4/projects`,
+      `https://gitlab.com/api/v4/${
+        params?.authorId ? `users/${params.authorId}/projects` : 'projects'
+      }`,
       {
         params: params,
       }
