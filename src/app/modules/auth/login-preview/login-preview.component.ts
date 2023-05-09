@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
-import { GitlabService } from '../../../stats/gitlab.service';
+import { GitlabService } from '../../../statistics/gitlab.service';
 import { GitlabAuthService } from '../gitlab-auth.service';
-import { UserExtraDto } from '../../../stats/dto/userExtra.dto';
+import { UserExtraDto } from '../../../statistics/dto/userExtra.dto';
 
 @Component({
   selector: 'app-login-preview',
