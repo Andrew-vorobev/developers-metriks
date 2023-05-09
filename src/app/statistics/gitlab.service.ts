@@ -45,10 +45,7 @@ export class GitlabService {
     );
   }
 
-  getUsers(options?: {
-    id?: number;
-    username?: string;
-  }): Observable<UserDto[]> {
+  getUsers(options?: { search?: string }): Observable<UserDto[]> {
     return this.httpClient.get<UserDto[]>('https://gitlab.com/api/v4/users', {
       params: options,
     });
