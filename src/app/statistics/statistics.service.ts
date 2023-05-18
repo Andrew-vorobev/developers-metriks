@@ -8,7 +8,7 @@ import { map, mergeAll, mergeMap, reduce, tap } from 'rxjs';
 export class StatisticsService {
   constructor(private gitlabService: GitlabService) {}
 
-  public getCommitsCount(authorId?: string) {
+  public getCommitsCount(authorId?: number) {
     return this.gitlabService.getEvents({ action: 'pushed', authorId }).pipe(
       tap(co => console.log(co)),
       mergeAll(),
@@ -17,7 +17,7 @@ export class StatisticsService {
     );
   }
 
-  public getMostActiveWeekDay(authorId?: string) {
+  public getMostActiveWeekDay(authorId?: number) {
     return this.gitlabService.getEvents({ authorId }).pipe(
       tap(ev => console.log(ev)),
       mergeAll(),
@@ -33,20 +33,22 @@ export class StatisticsService {
     );
   }
 
-  public getEditingStats() {
-    return this.gitlabService.getProjects({ membership: true }).pipe(
-      mergeAll(),
-      mergeMap(project => {
-        return this.gitlabService.getCommitsExtended(project.id);
-      }),
-      mergeAll(),
-      reduce(
-        (data: number[], commit) => {
-          const stats = commit.stats;
-          return [data[0] + stats.additions, data[1] + stats.deletions];
-        },
-        [0, 0]
-      )
-    );
+  public getEditingStats(authorId?: number) {
+    return this.gitlabService
+      .getProjects({ authorId, membership: !authorId })
+      .pipe(
+        mergeAll(),
+        mergeMap(project => {
+          return this.gitlabService.getCommitsExtended(project.id);
+        }),
+        mergeAll(),
+        reduce(
+          (data: number[], commit) => {
+            const stats = commit.stats;
+            return [data[0] + stats.additions, data[1] + stats.deletions];
+          },
+          [0, 0]
+        )
+      );
   }
 }
