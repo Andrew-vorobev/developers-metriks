@@ -10,7 +10,8 @@ const routes: Routes = [
   },
   {
     path: 'static',
-    loadChildren: () => import('./stats/stats.module').then(m => m.StatsModule),
+    loadChildren: () =>
+      import('./statistics/statistics.module').then(m => m.StatisticsModule),
   },
   {
     path: 'compare',
