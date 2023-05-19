@@ -19,8 +19,7 @@ const routes: Routes = [
       import('./modules/compare/compare.module').then(m => m.CompareModule),
   },
   {
-    path: '',
-    // pathMatch: 'full',
+    path: 'user',
     loadChildren: () =>
       import('./modules/user/user.module').then(m => m.UserModule),
   },

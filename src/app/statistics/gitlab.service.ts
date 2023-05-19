@@ -22,7 +22,7 @@ import { PushedEventDto } from './dto/pushed-event.dto';
 import { CommitExtraDto } from './dto/commit-extra.dto';
 
 interface IEventParams {
-  authorId?: string;
+  authorId?: number;
   action?: string;
 }
 
@@ -107,7 +107,7 @@ export class GitlabService {
 
   public getProjects(params?: {
     membership?: boolean;
-    authorId?: string;
+    authorId?: number;
     owned?: boolean;
     visibility?: 'public' | 'internal' | 'private';
     order_by?:
