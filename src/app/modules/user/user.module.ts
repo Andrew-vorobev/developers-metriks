@@ -6,6 +6,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SkeletonDirective } from '../../shared/skeleton/skeleton.directive';
 import { UserSearchComponent } from './user/user-search/user-search.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,11 @@ import { UserSearchComponent } from './user/user-search/user-search.component';
     HomeComponent,
     WelcomeComponent,
   ],
-  imports: [CommonModule, UserRoutingModule, SkeletonDirective],
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    SkeletonDirective,
+    ReactiveFormsModule,
+  ],
 })
 export class UserModule {}

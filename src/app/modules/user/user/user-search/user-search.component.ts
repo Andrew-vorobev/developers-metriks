@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-search',
@@ -13,7 +8,7 @@ import {
 })
 export class UserSearchComponent implements OnInit {
   protected form!: FormGroup;
-  constructor() {}
+  // constructor() {}
 
   ngOnInit() {
     this.form = new FormGroup({
@@ -21,5 +16,7 @@ export class UserSearchComponent implements OnInit {
     });
   }
 
-  protected submit(): void {}
+  protected submit(): void {
+    console.log('Okay');
+  }
 }
