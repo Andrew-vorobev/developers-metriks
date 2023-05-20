@@ -5,9 +5,15 @@ import { HomeComponent } from './home/home.component';
 import { UserRoutingModule } from './user-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { SkeletonDirective } from '../../shared/skeleton/skeleton.directive';
+import { UserSearchComponent } from './user/user-search/user-search.component';
 
 @NgModule({
-  declarations: [UserComponent, HomeComponent, WelcomeComponent],
+  declarations: [
+    UserComponent,
+    UserSearchComponent,
+    HomeComponent,
+    WelcomeComponent,
+  ],
   imports: [CommonModule, UserRoutingModule, SkeletonDirective],
 })
 export class UserModule {}
