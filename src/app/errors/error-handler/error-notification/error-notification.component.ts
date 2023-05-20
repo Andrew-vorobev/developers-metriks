@@ -22,12 +22,12 @@ export class ErrorNotificationComponent implements OnInit, OnDestroy {
       this._errorNotificationService.notified$.subscribe(error => {
         if (error) {
           this.error = error;
-          this.displayNotification();
+          this._displayNotification();
         }
       });
   }
 
-  private displayNotification(): void {
+  private _displayNotification(): void {
     if (!this._isOpened) {
       this._isOpened = true;
       this.httpResponseErrorMessage =
@@ -50,7 +50,7 @@ export class ErrorNotificationComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this._notifySubscription.unsubscribe();
   }
 }
