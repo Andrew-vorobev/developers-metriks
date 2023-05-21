@@ -6,11 +6,11 @@ import { ERROR_LOGGER, IErrorLogger } from './error-logger.interface';
 })
 export class GlobalErrorHandlerService implements ErrorHandler {
   constructor(
-    @Inject(ERROR_LOGGER) private errorLogger: IErrorLogger,
-    private zone: NgZone
+    @Inject(ERROR_LOGGER) private _errorLogger: IErrorLogger,
+    private _zone: NgZone
   ) {}
 
-  handleError(error: Error) {
-    this.zone.run(() => this.errorLogger.log(error));
+  public handleError(error: Error) {
+    this._zone.run(() => this._errorLogger.log(error));
   }
 }

@@ -11,26 +11,25 @@ import { Subscription } from 'rxjs';
 export class ErrorNotificationComponent implements OnInit, OnDestroy {
   protected error: Error;
   protected httpResponseErrorMessage: string;
-  private notifySubscription: Subscription;
   protected elClassList: string[] = ['error-notification'];
-  private isOpened = false;
+  private _notifySubscription: Subscription;
+  private _isOpened = false;
 
-  constructor(private errorNotificationService: ErrorNotificationService) {}
+  constructor(private _errorNotificationService: ErrorNotificationService) {}
 
-  ngOnInit(): void {
-    this.notifySubscription = this.errorNotificationService.notified$.subscribe(
-      error => {
+  public ngOnInit(): void {
+    this._notifySubscription =
+      this._errorNotificationService.notified$.subscribe(error => {
         if (error) {
           this.error = error;
-          this.displayNotification();
+          this._displayNotification();
         }
-      }
-    );
+      });
   }
 
-  displayNotification(): void {
-    if (!this.isOpened) {
-      this.isOpened = true;
+  private _displayNotification(): void {
+    if (!this._isOpened) {
+      this._isOpened = true;
       this.httpResponseErrorMessage =
         this.error instanceof HttpErrorResponse
           ? `Статус-код: ${this.error.status} - ${this.error.statusText}`
@@ -40,9 +39,9 @@ export class ErrorNotificationComponent implements OnInit, OnDestroy {
     }
   }
 
-  hideNotification(): void {
-    if (this.isOpened) {
-      this.isOpened = false;
+  protected hideNotification(): void {
+    if (this._isOpened) {
+      this._isOpened = false;
       this.elClassList = ['error-notification'];
       setTimeout(
         () => (this.elClassList = ['error-notification', 'display-none']),
@@ -51,7 +50,7 @@ export class ErrorNotificationComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy() {
-    this.notifySubscription.unsubscribe();
+  public ngOnDestroy() {
+    this._notifySubscription.unsubscribe();
   }
 }

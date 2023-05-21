@@ -1,14 +1,16 @@
 <div *ngIf="error" [class]="elClassList" id="error-notification">
-  <div class="error-notification__desc">
-    <h2 class="error-notification__title">Что-то пошло не так!</h2>
-    <p *ngIf="httpResponseErrorMessage" class="error-notification__status">
+  <div class="font-normal text-xs">
+    <h2 class="font-semibold text-base mb-[0.3em]">Что-то пошло не так!</h2>
+    <p *ngIf="httpResponseErrorMessage" class="font-medium text-sm mb-[0.3em]">
       {{ httpResponseErrorMessage }}
     </p>
-    <p class="error-notification__message">
+    <p class="w-full">
       {{ error.message }}
     </p>
   </div>
-  <button (click)="hideNotification()" class="error-notification__btn">
+  <button
+    (click)="hideNotification()"
+    class="font-medium text-lg tracking-[0.03em] bg-[#d72727] cursor-pointer select-none text-[#efefef] px-5 py-[5px] rounded-[30px] border-[none]">
     Закрыть
   </button>
 </div>

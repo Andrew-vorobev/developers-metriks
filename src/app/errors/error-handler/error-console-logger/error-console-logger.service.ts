@@ -5,7 +5,7 @@ import { IErrorLogger } from '../error-logger.interface';
   providedIn: 'root',
 })
 export class ErrorConsoleLoggerService implements IErrorLogger {
-  log(error: Error): void {
+  public log(error: Error): void {
     console.warn('Some error has occurred', error);
   }
 }
