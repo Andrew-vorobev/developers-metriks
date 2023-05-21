@@ -1,0 +1,15 @@
+<h2 class="text-2xl font-semibold mt-4 mb-4">Найти пользователя</h2>
+<form [formGroup]="form" (submit)="submit()" class="mb-10">
+  <div class="flex gap-8">
+    <input
+      formControlName="search"
+      name="search"
+      id="search"
+      class="border-2 rounded-lg p-2 text-xl flex-1" />
+    <button
+      type="submit"
+      class="flex-2 border-2 rounded-lg p-2 px-4 text-xl bg-green-500 text-white font-semibold">
+      Поиск
+    </button>
+  </div>
+</form>

@@ -1,1 +1,34 @@
-<p>user works!</p>
+<h1 class="text-2xl font-semibold mb-4">Информация о пользователе</h1>
+<div class="flex justify-between">
+  <div class="flex">
+    <img
+      alt=""
+      class="border-2 border-gray-400 rounded-full w-56 h-56 aspect-square"
+      *appSkeleton="isLoading; width: '14rem'; isRound: true"
+      src="{{ data.avatar_url }}" />
+
+    <div class="flex flex-col justify-around ml-8">
+      <h3
+        class="font-semibold text-2xl"
+        *appSkeleton="isLoading; width: '300px'; height: '30px'">
+        {{ data.name }}
+      </h3>
+      <h3
+        class="font-semibold text-2xl"
+        *appSkeleton="isLoading; width: '300px'; height: '30px'">
+        {{ data.username }}
+      </h3>
+      <address
+        class="text-2xl"
+        *appSkeleton="isLoading; width: '300px'; height: '30px'">
+        {{ data.email }}
+      </address>
+    </div>
+  </div>
+  <div class="flex flex-col" *ngIf="!isLoading">
+    <h3>Самый активный день: ПН</h3>
+    <h3>Общее количество коммитов: {{ commitCount }}</h3>
+  </div>
+</div>
+
+<app-user-search></app-user-search>
