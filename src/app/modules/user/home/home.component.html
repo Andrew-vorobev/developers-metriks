@@ -1,4 +1,5 @@
-<div class="flex justify-between">
+<h1 class="text-2xl font-semibold mb-6">Ваша информация</h1>
+<div class="flex justify-between mb-20">
   <div class="flex">
     <img
       alt=""
@@ -12,11 +13,12 @@
         *appSkeleton="isLoading; width: '300px'; height: '30px'">
         {{ data.name }}
       </h3>
-      <h3
+      <a
+        [href]="data.web_url"
         class="font-semibold text-2xl"
         *appSkeleton="isLoading; width: '300px'; height: '30px'">
         {{ data.username }}
-      </h3>
+      </a>
       <address
         class="text-2xl"
         *appSkeleton="isLoading; width: '300px'; height: '30px'">
@@ -29,5 +31,4 @@
     <h3>Общее количество коммитов: {{ commitCount }}</h3>
   </div>
 </div>
-
 <app-user-search></app-user-search>

@@ -40,4 +40,5 @@ export class UserExtraDto {
   commit_email: string;
   shared_runners_minutes_limit?: number;
   extra_shared_runners_minutes_limit?: number;
+  message?: string;
 }

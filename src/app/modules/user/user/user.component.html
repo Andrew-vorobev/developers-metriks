@@ -1,34 +1,57 @@
-<h1 class="text-2xl font-semibold mb-4">Информация о пользователе</h1>
-<div class="flex justify-between">
-  <div class="flex">
-    <img
-      alt=""
-      class="border-2 border-gray-400 rounded-full w-56 h-56 aspect-square"
-      *appSkeleton="isLoading; width: '14rem'; isRound: true"
-      src="{{ data.avatar_url }}" />
+<ng-container *ngIf="isUserExist; else userUndefined">
+  <h1 class="text-2xl font-semibold mb-6">Информация о пользователе</h1>
+  <div class="flex justify-between mb-20">
+    <div class="flex">
+      <img
+        alt=""
+        class="border-2 border-gray-400 rounded-full w-56 h-56 aspect-square"
+        *appSkeleton="isLoading; width: '14rem'; isRound: true"
+        src="{{ data.avatar_url }}" />
 
-    <div class="flex flex-col justify-around ml-8">
-      <h3
-        class="font-semibold text-2xl"
-        *appSkeleton="isLoading; width: '300px'; height: '30px'">
-        {{ data.name }}
-      </h3>
-      <h3
-        class="font-semibold text-2xl"
-        *appSkeleton="isLoading; width: '300px'; height: '30px'">
-        {{ data.username }}
-      </h3>
-      <address
-        class="text-2xl"
-        *appSkeleton="isLoading; width: '300px'; height: '30px'">
-        {{ data.email }}
-      </address>
+      <div class="flex flex-col justify-around ml-8">
+        <h3
+          class="font-semibold text-2xl"
+          *appSkeleton="isLoading; width: '300px'; height: '30px'">
+          {{ data.name }}
+        </h3>
+        <a
+          [href]="data.web_url"
+          class="font-semibold text-2xl"
+          *appSkeleton="isLoading; width: '300px'; height: '30px'">
+          {{ data.username }} - {{ data.id }}
+        </a>
+        <address
+          class="text-2xl"
+          *appSkeleton="isLoading; width: '300px'; height: '30px'">
+          {{ data.email }}
+        </address>
+      </div>
+    </div>
+    <div class="flex flex-col" *ngIf="!isLoading">
+      <h3>Самый активный день: ПН</h3>
+      <h3>Общее количество коммитов: {{ commitCount }}</h3>
     </div>
   </div>
-  <div class="flex flex-col" *ngIf="!isLoading">
-    <h3>Самый активный день: ПН</h3>
-    <h3>Общее количество коммитов: {{ commitCount }}</h3>
-  </div>
-</div>
-
+</ng-container>
 <app-user-search></app-user-search>
+
+<ng-template #userUndefined>
+  <h1 class="text-3xl font-semibold mb-6">
+    Невозможно получить данные о пользователе
+  </h1>
+</ng-template>
+
+<!--языки программирования, количество коммитов, количество код ревью, количество строк кода добавленных/удаленных,
+    самый активный день в неделе,-->
+<!-- объем проведенных код-ревью, самое активное время совершения коммитов-->
+
+<!--1. Профиль авторизованного пользователя,-->
+<!--2. Профиль пользователя по id-->
+<!--3. Проекты-->
+<!--4. Коммиты проекта-->
+<!--5. Расширенные коммиты проекта-->
+<!--6. Ивенты пользователя-->
+
+<!--1. Количество коммитов-->
+<!--2. Самый активный день недели-->
+<!--3. Количество добавленных \ удаленных строк-->
