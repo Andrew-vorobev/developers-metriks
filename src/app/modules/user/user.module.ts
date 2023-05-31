@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule, NgOptimizedImage } from "@angular/common";
+import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
 import { UserRoutingModule } from './user-routing.module';
@@ -20,7 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     UserRoutingModule,
     SkeletonDirective,
     ReactiveFormsModule,
-    NgOptimizedImage
-  ]
+    NgOptimizedImage,
+  ],
 })
 export class UserModule {}
