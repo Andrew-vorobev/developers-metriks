@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GitlabService } from './gitlab.service';
-import { map, mergeAll, mergeMap, reduce, tap } from 'rxjs';
+import { map, mergeAll, mergeMap, Observable, reduce, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -50,5 +50,18 @@ export class StatisticsService {
           [0, 0]
         )
       );
+  }
+
+  public getProgramingLanguages(authorId: number): Observable<Set<string>> {
+    return this.gitlabService.getProjects({ authorId: authorId }).pipe(
+      mergeAll(),
+      mergeMap(project => {
+        return this.gitlabService.getProgramingLanguages(project.id);
+      }),
+      reduce((data: Set<string>, languages: any) => {
+        Object.keys(languages).forEach(language => data.add(language));
+        return data;
+      }, new Set<string>())
+    );
   }
 }

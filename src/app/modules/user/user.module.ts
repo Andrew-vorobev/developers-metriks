@@ -7,6 +7,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { SkeletonDirective } from '../../shared/skeleton/skeleton.directive';
 import { UserSearchComponent } from './user-search/user-search.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { LetDirective } from '../../shared/let.directive';
+import { WeekdayPipe } from '../../shared/pipes/weekday.pipe';
+import { SequencePipe } from '../../shared/pipes/sequence.pipe';
 
 @NgModule({
   declarations: [
@@ -21,6 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SkeletonDirective,
     ReactiveFormsModule,
     NgOptimizedImage,
+    LetDirective,
+    WeekdayPipe,
+    SequencePipe,
   ],
 })
 export class UserModule {}
