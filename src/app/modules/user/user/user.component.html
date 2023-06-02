@@ -1,130 +1,22 @@
 <app-user-search></app-user-search>
 
-<ng-container *ngIf="_userService.isUserExist; else userUndefined">
-  <h1 class="text-2xl font-semibold mb-6">Информация о пользователе</h1>
-  <div
-    class="flex justify-between mb-14 gap-5"
-    *appLet="_userService.userStats as stats">
-    <div class="flex" *appLet="_userService.userData as data">
-      <img
-        alt=""
-        class="border-2 border-gray-400 rounded-full w-40 h-40 aspect-square"
-        *appSkeleton="
-          _userService.isLoadingUserData;
-          width: '10rem';
-          isRound: true
-        "
-        [src]="
-          _userService.isLoadingUserData ? '/assets/user.png' : data.avatar_url
-        " />
-      <div class="flex flex-col justify-around ml-8">
-        <h3
-          class="font-semibold text-2xl"
-          *appSkeleton="
-            _userService.isLoadingUserData;
-            width: '250px';
-            height: '25px'
-          ">
-          {{ data.name }}
-        </h3>
-        <a
-          [href]="data.web_url"
-          class="font-semibold text-2xl"
-          *appSkeleton="
-            _userService.isLoadingUserData;
-            width: '350px';
-            height: '25px'
-          ">
-          {{ data.username }} - {{ data.id }}
-        </a>
-        <address
-          class="text-2xl"
-          *appSkeleton="
-            _userService.isLoadingUserData;
-            width: '250px';
-            height: '25px'
-          ">
-          {{ data.public_email ?? 'Почта скрыта' }}
-        </address>
-      </div>
-    </div>
-    <div class="flex flex-col justify-between">
-      <h3
-        class="font-medium text-base"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '250px';
-          height: '20px'
-        ">
-        Языки программирования:
-      </h3>
-      <div
-        class="pl-3 mb-2 mt-[-1.2rem]"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '200px';
-          height: '18px'
-        ">
-        {{ stats.programingLanguages | sequence }}
-      </div>
-      <h3
-        class="font-medium text-base"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '250px';
-          height: '20px'
-        ">
-        Самый активный день: <br />
-      </h3>
-      <div
-        class="font-normal pl-3 mt-[-1.2rem]"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '180px';
-          height: '18px'
-        ">
-        {{ stats.mostActiveWeekday | weekday }}
-      </div>
-    </div>
-    <div class="flex flex-col justify-between">
-      <h3
-        class="font-medium text-base"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '250px';
-          height: '20px'
-        ">
-        Общее число коммитов: <b class="text-lg">{{ stats.commitsCount }}</b>
-      </h3>
-      <div
-        class="font-normal text-sm text-gray-600 pl-5 mt-[-2rem]"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '180px';
-          height: '16px'
-        ">
-        {{ stats.editStats[0] }} строк (-и) добавлено
-      </div>
-      <div
-        class="font-normal text-sm text-gray-600 pl-5 mt-[-2rem]"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '180px';
-          height: '16px'
-        ">
-        {{ stats.editStats[1] }} строк (-и) удалено
-      </div>
-      <h3
-        class="font-medium text-base"
-        *appSkeleton="
-          _userService.isLoadingUserStats;
-          width: '250px';
-          height: '20px'
-        ">
-        Общее число код-ревью: <b class="text-lg">{{ stats.reviewsCount }}</b>
-      </h3>
-    </div>
+<ng-container *ngIf="userService.isUserExist; else userUndefined">
+  <h1 class="text-2xl font-semibold pl-10 mb-6">Информация о пользователе</h1>
+  <div class="flex justify-between mb-14">
+    <app-user-data class="w-full" [userService]="userService"></app-user-data>
+    <app-user-stats
+      class="w-full flex justify-between gap-5"
+      [userService]="userService"></app-user-stats>
   </div>
+  <div
+    class="font-normal text-base text-gray-600 pl-10 mt-[-2.3rem] mb-8"
+    *ngIf="userService.commits.length > 0">
+    Последняя активность:
+    {{ userService.commits[0].committed_date | date : 'medium' : 'UTC+3' }}
+  </div>
+  <app-user-projects [userService]="userService"></app-user-projects>
+  <!--^^^ отступ между компонентами у списка проектов ^^^-->
+  <app-user-commits [userService]="userService"></app-user-commits>
 </ng-container>
 
 <ng-template #userUndefined>
@@ -132,7 +24,3 @@
     Невозможно получить данные о пользователе
   </h1>
 </ng-template>
-
-<!--языки программирования, количество коммитов, количество код ревью, количество строк кода добавленных/удаленных,
-    самый активный день в неделе,-->
-<!-- объем проведенных код-ревью, самое активное время совершения коммитов-->

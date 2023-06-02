@@ -10,6 +10,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { LetDirective } from '../../shared/let.directive';
 import { WeekdayPipe } from '../../shared/pipes/weekday.pipe';
 import { SequencePipe } from '../../shared/pipes/sequence.pipe';
+import { UserDataComponent } from './user-data/user-data.component';
+import { UserStatsComponent } from './user-stats/user-stats.component';
+import { UserProjectsComponent } from './user-projects/user-projects.component';
+import { UserCommitsComponent } from './user-commits/user-commits.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +21,10 @@ import { SequencePipe } from '../../shared/pipes/sequence.pipe';
     UserSearchComponent,
     HomeComponent,
     WelcomeComponent,
+    UserDataComponent,
+    UserStatsComponent,
+    UserProjectsComponent,
+    UserCommitsComponent,
   ],
   imports: [
     CommonModule,

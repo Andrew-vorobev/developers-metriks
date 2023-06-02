@@ -1,38 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { GitlabService } from '../../../statistics/gitlab.service';
-import { StatisticsService } from '../../../statistics/statistics.service';
-import { GitlabAuthService } from '../../auth/gitlab-auth.service';
-import { ProfileDto } from '../../../statistics/dto/profile.dto';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
-  protected data: ProfileDto;
-  protected isLoading = false;
-  protected isLogged = false;
-  protected commitCount: number;
+export class HomeComponent implements OnInit, OnDestroy {
+  private _subs: Subscription[];
+
   constructor(
-    private gitlabService: GitlabService,
-    private gitlabAuthService: GitlabAuthService,
-    private statisticService: StatisticsService
-  ) {}
+    private _activateRoute: ActivatedRoute,
+    protected userService: UserService
+  ) {
+    this._subs = [];
+  }
 
   ngOnInit() {
-    if (this.gitlabAuthService.hasValidAccessToken()) {
-      this.isLoading = true;
-      this.isLogged = true;
-      this.gitlabService.getProfileData().subscribe(data => {
-        this.data = data;
-      });
-      this.statisticService.getCommitsCount().subscribe(commits => {
-        this.commitCount = commits;
-        this.isLoading = false;
-      });
-      this.statisticService.getMostActiveWeekDay();
-      this.statisticService.getEditingStats();
-    }
+    this._subs.push(
+      this._activateRoute.params
+        .pipe(map(params => params['id']))
+        .subscribe(userNameId => this.userService.updateUserData(true))
+    );
+  }
+
+  ngOnDestroy() {
+    this._subs.forEach(sub => sub.unsubscribe());
   }
 }

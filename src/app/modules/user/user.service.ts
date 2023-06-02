@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject,
-  catchError,
   concatMap,
   firstValueFrom,
   forkJoin,
@@ -12,6 +10,8 @@ import {
   of,
   Subject,
   Subscription,
+  take,
+  takeUntil,
   tap,
 } from 'rxjs';
 import { GitlabService } from '../../statistics/gitlab.service';
@@ -34,11 +34,16 @@ export class UserService {
 
   public projects: ProjectDto[];
   public commits: CommitExtraDto[];
+  private _projectsReady = new Subject<void>();
+  private _projectsReady$ = this._projectsReady.asObservable();
+  public visibleProjectsCount = 4;
+  public visibleCommitsCount = 8;
 
   public isUserExist = true;
   public isLoadingUserData = true;
   public isLoadingUserStats = true;
-  public isLoadingUserActivity = true;
+  public isLoadingUserProjects = true;
+  public isLoadingUserCommits = true;
   private _subs: Subscription[];
 
   constructor(
@@ -51,15 +56,37 @@ export class UserService {
     this._subs?.forEach(sub => sub.unsubscribe());
     this._subs = [
       this.userDataLoaded$.subscribe(() => this._setUserStats()),
-      this.userDataLoaded$.subscribe(() => this._setUserActivity()),
+      this.userDataLoaded$.subscribe(() => this._setUserProjects()),
+      this._projectsReady$.subscribe(() => this._setUserCommits()),
     ];
   }
 
-  public updateUserData(userNameId: string): void {
+  public updateUserData(isProfile: boolean, userNameId?: string): void {
     if (!this._gitlabAuthService.hasValidAccessToken()) return;
-    this._subscribeOnUserData();
-    this.isLoadingUserData = true;
 
+    this._subscribeOnUserData();
+    this.isUserExist = true;
+    this.isLoadingUserData = true;
+    this.isLoadingUserStats = true;
+    this.isLoadingUserProjects = true;
+    this.isLoadingUserCommits = true;
+    this.projects = [];
+    this.commits = [];
+
+    if (isProfile) {
+      this._getProfileData();
+    } else {
+      this._getUserData(userNameId as string);
+    }
+  }
+
+  private _getProfileData(): void {
+    this._setUserData(
+      this._gitlabService.getProfileData() as Observable<UserExtraDto>
+    );
+  }
+
+  private _getUserData(userNameId: string): void {
     if (userNameId.match(/^\d+$/)) {
       this._setUserData(this._gitlabService.getUser(parseInt(userNameId)));
     } else {
@@ -101,16 +128,25 @@ export class UserService {
         this._statisticService.getMostActiveWeekDay(this.userData.id),
         this._statisticService.getCommitsCount(this.userData.id),
         this._statisticService.getEditingStats(this.userData.id),
+        this._statisticService.getReviewsCount(this.userData.id),
       ]).pipe(
-        map(([languages, mostActiveWeekday, commitsCount, editStats]) => {
-          return {
-            programingLanguages: languages,
-            mostActiveWeekday: mostActiveWeekday,
-            commitsCount: commitsCount,
-            editStats: editStats,
-            reviewsCount: 3,
-          } as IUserStat;
-        })
+        map(
+          ([
+            languages,
+            mostActiveWeekday,
+            commitsCount,
+            editStats,
+            reviewsCount,
+          ]) => {
+            return {
+              programingLanguages: languages,
+              mostActiveWeekday: mostActiveWeekday,
+              commitsCount: commitsCount,
+              editStats: editStats,
+              reviewsCount: reviewsCount,
+            } as IUserStat;
+          }
+        )
       )
     )
       .then(stats => {
@@ -122,32 +158,51 @@ export class UserService {
       });
   }
 
-  private _setUserActivity(): void {
-    this.isLoadingUserActivity = true;
-
+  private _setUserProjects(): void {
     firstValueFrom(
-      this._gitlabService
-        .getProjects({ authorId: this.userData.id })
-        .pipe(
-          tap(projects => {
-            this.projects = projects;
-          })
-        )
-        .pipe(
-          mergeAll(),
-          mergeMap(project => {
-            return this._gitlabService.getCommitsExtended(project.id);
-          })
-        )
+      this._gitlabService.getProjects({
+        authorId: this.userData.id,
+        membership: true,
+      })
     )
-      .then(commits => {
-        this.commits = commits;
-        this.isLoadingUserActivity = false;
+      .then(projects => {
+        this.projects = projects;
+        this.isLoadingUserProjects = false;
+        this._projectsReady.next();
       })
       .catch(() => {
         throw new Error(
-          'Не удалось получить данные о репозитериях и коммитах пользователя'
+          'Не удалось получить данные о репозитериях пользователя'
         );
+      });
+  }
+
+  private _setUserCommits(): void {
+    if (this.projects.length === 0) {
+      this.commits = [];
+      this.isLoadingUserCommits = false;
+      return;
+    }
+
+    firstValueFrom(
+      of(this.projects).pipe(
+        mergeAll(),
+        mergeMap(project => this._gitlabService.getCommitsExtended(project.id)),
+        take(this.visibleCommitsCount)
+      )
+    )
+      .then(commits => {
+        commits.sort((a, b) => {
+          return (
+            new Date(b.committed_date).getTime() -
+            new Date(a.committed_date).getTime()
+          );
+        });
+        this.commits = commits;
+        this.isLoadingUserCommits = false;
+      })
+      .catch(() => {
+        throw new Error('Не удалось получить данные о коммитах пользователя');
       });
   }
 }

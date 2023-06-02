@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { GitlabService } from './gitlab.service';
-import { map, mergeAll, mergeMap, Observable, reduce, tap } from 'rxjs';
+import { map, mergeAll, mergeMap, Observable, of, reduce, tap } from 'rxjs';
+import { ProjectDto } from './dto/project.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -23,12 +24,18 @@ export class StatisticsService {
       mergeAll(),
       map(event => new Date(event.created_at).getUTCDay()),
       reduce(
-        (stats: { [key: string]: number }, day) => {
+        (stats: { [key: number]: number }, day) => {
           return { [day]: stats[day]++, ...stats };
         },
         { 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0 }
       ),
-      map(obj => Math.max(...(Object.values(obj) as number[]))),
+      map(obj => {
+        let result = ['0', -1];
+        Object.entries(obj).forEach(([weekday, eventsCount]) => {
+          if (eventsCount > result[1]) result = [weekday, eventsCount];
+        });
+        return parseInt(result[0] as string);
+      }),
       tap(st => console.log(st))
     );
   }
@@ -53,15 +60,42 @@ export class StatisticsService {
   }
 
   public getProgramingLanguages(authorId: number): Observable<Set<string>> {
-    return this.gitlabService.getProjects({ authorId: authorId }).pipe(
-      mergeAll(),
-      mergeMap(project => {
-        return this.gitlabService.getProgramingLanguages(project.id);
-      }),
-      reduce((data: Set<string>, languages: any) => {
-        Object.keys(languages).forEach(language => data.add(language));
-        return data;
-      }, new Set<string>())
-    );
+    return this.gitlabService
+      .getProjects({ authorId, membership: !authorId })
+      .pipe(
+        mergeAll(),
+        mergeMap(project => {
+          return this.gitlabService.getProgramingLanguages(project.id);
+        }),
+        reduce((data: Set<string>, languages: any) => {
+          Object.keys(languages).forEach(language => data.add(language));
+          return data;
+        }, new Set<string>())
+      );
+  }
+
+  public getReviewsCount(userId: number): Observable<number> {
+    return this.gitlabService
+      .getProjects({ authorId: userId, membership: !userId })
+      .pipe(
+        mergeAll(),
+        mergeMap(project => {
+          return this.gitlabService.getMergeRequests(project.id);
+        }),
+        mergeAll(),
+        mergeMap(request => {
+          return this.gitlabService.getRequestReviewers(
+            request.project_id,
+            request.iid
+          );
+        }),
+        mergeAll(),
+        reduce((reviewsCount, review) => {
+          if (review.user.id === userId) {
+            return reviewsCount + (review.state === 'reviewed' ? 1 : 0);
+          }
+          return reviewsCount;
+        }, 0)
+      );
   }
 }

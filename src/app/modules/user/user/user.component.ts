@@ -1,7 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { GitlabService } from '../../../statistics/gitlab.service';
-import { GitlabAuthService } from '../../auth/gitlab-auth.service';
-import { StatisticsService } from '../../../statistics/statistics.service';
 import { map, Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../user.service';
@@ -15,11 +12,8 @@ export class UserComponent implements OnInit, OnDestroy {
   private _subs: Subscription[];
 
   constructor(
-    private _gitlabService: GitlabService,
-    private _gitlabAuthService: GitlabAuthService,
-    private _statisticService: StatisticsService,
     private _activateRoute: ActivatedRoute,
-    protected _userService: UserService
+    protected userService: UserService
   ) {
     this._subs = [];
   }
@@ -28,7 +22,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this._subs.push(
       this._activateRoute.params
         .pipe(map(params => params['id']))
-        .subscribe(userNameId => this._userService.updateUserData(userNameId))
+        .subscribe(userNameId =>
+          this.userService.updateUserData(false, userNameId)
+        )
     );
   }
 

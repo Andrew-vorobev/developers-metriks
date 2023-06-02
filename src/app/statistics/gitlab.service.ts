@@ -20,6 +20,8 @@ import { CommitDto } from './dto/commit.dto';
 import { ProfileDto } from './dto/profile.dto';
 import { PushedEventDto } from './dto/pushed-event.dto';
 import { CommitExtraDto } from './dto/commit-extra.dto';
+import { RequestDto } from './dto/request.dto';
+import { ReviewDto } from './dto/review.dto';
 
 interface IEventParams {
   authorId?: number;
@@ -132,6 +134,18 @@ export class GitlabService {
   public getProgramingLanguages(projectId: number): Observable<any> {
     return this.httpClient.get(
       `https://gitlab.com/api/v4/projects/${projectId}/languages`
+    );
+  }
+
+  public getMergeRequests(projectId: number) {
+    return this.httpClient.get<RequestDto[]>(
+      `https://gitlab.com/api/v4/projects/${projectId}/merge_requests`
+    );
+  }
+
+  public getRequestReviewers(projectId: number, mergeRequestIid: number) {
+    return this.httpClient.get<ReviewDto[]>(
+      `https://gitlab.com/api/v4/projects/${projectId}/merge_requests/${mergeRequestIid}/reviewers`
     );
   }
 }
