@@ -11,8 +11,8 @@ import {
   take,
 } from 'rxjs';
 import { UserDto } from '../../statistics/dto/user.dto';
-import { IUserStat } from './compare-list/compare-list.component';
 import { StatisticsService } from '../../statistics/statistics.service';
+import { IUserStat } from '../../shared/interfaces/user-stat.interface';
 
 @Injectable({
   providedIn: 'root',

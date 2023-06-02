@@ -1,14 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CompareService } from '../compare.service';
-
-export interface IUserStat {
-  id: number;
-  username: string;
-  avatar_url: string;
-  mostActiveWeekday: number;
-  editStats: number[];
-  commitsCount: number;
-}
+import { IUserStat } from '../../../shared/interfaces/user-stat.interface';
 
 @Component({
   selector: 'app-compare-list',
