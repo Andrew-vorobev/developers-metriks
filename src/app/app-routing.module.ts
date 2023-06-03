@@ -19,7 +19,7 @@ const routes: Routes = [
       import('./modules/compare/compare.module').then(m => m.CompareModule),
   },
   {
-    path: 'user',
+    path: 'users',
     loadChildren: () =>
       import('./modules/user/user.module').then(m => m.UserModule),
   },

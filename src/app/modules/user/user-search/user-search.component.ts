@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-search',
@@ -7,16 +8,18 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user-search.component.css'],
 })
 export class UserSearchComponent implements OnInit {
+  protected isLoading = false;
   protected form!: FormGroup;
-  // constructor() {}
+
+  constructor(private _router: Router) {}
 
   ngOnInit() {
     this.form = new FormGroup({
-      search: new FormControl<string>('', Validators.required),
+      id: new FormControl<string>('', Validators.required),
     });
   }
 
-  protected submit(): void {
-    console.log('Okay');
+  protected onSubmit(): void {
+    this._router.navigate(['/users/user', this.form.value.id]);
   }
 }

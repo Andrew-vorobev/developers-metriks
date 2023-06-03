@@ -1,0 +1,56 @@
+import { UserDto } from './user.dto';
+
+export class RequestDto {
+  public id: number;
+  public iid: number;
+  public project_id: number;
+  public title: string;
+  public description: string;
+  public state: string;
+  public created_at: string;
+  public updated_at: string;
+  public merged_by: UserDto | null;
+  public merge_user: UserDto | null;
+  public merged_at: string;
+  public closed_by: UserDto | null;
+  public closed_at: string | null;
+  public target_branch: string;
+  public source_branch: string;
+  public user_notes_count: number;
+  public upvotes: number;
+  public downvotes: number;
+  public author: UserDto | null;
+  public assignees: any;
+  public assignee: any;
+  public reviewers: UserDto[];
+  public source_project_id: number;
+  public target_project_id: number;
+  public labels: any[];
+  public draft: boolean;
+  public work_in_progress: boolean;
+  public milestone: any;
+  public merge_when_pipeline_succeeds: boolean;
+  public merge_status: string;
+  public detailed_merge_status: string;
+  public sha: string;
+  public merge_commit_sha: string;
+  public squash_commit_sha: any;
+  public discussion_locked: any;
+  public should_remove_source_branch: boolean;
+  public force_remove_source_branch: boolean;
+  public reference: string;
+  public references: { short: string; relative: string; full: string };
+  public web_url: string;
+  public time_stats: {
+    time_estimate: number;
+    total_time_spent: number;
+    human_time_estimate: any;
+    human_total_time_spent: any;
+  };
+  public squash: boolean;
+  public squash_on_merge: boolean;
+  public task_completion_status: { count: number; completed_count: number };
+  public has_conflicts: boolean;
+  public blocking_discussions_resolved: boolean;
+  public approvals_before_merge: any;
+}
