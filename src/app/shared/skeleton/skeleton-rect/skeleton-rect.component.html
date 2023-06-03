@@ -1,7 +1,12 @@
 <div
+  ngClass="'bg-gray-300', 'animate-pulse', 'rounded-2xl', {{ classes }}"
   class="bg-gray-300 animate-pulse rounded-2xl"
-  [ngStyle]="{
-    height: isRound ? width : height,
-    width: width,
-    'border-radius': isRound ? '50%' : '1rem'
-  }"></div>
+  [ngStyle]="
+    isRound || height || width
+      ? {
+          height: isRound ? width : height,
+          width: width,
+          'border-radius': isRound ? '50%' : '1rem'
+        }
+      : null
+  "></div>
