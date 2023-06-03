@@ -1,4 +1,4 @@
-<div class="flex mb-12">
+<div class="flex mb-12 flex-col items-center gap-4 sm:gap-x-6 sm:flex-row">
   <img
     *appSkeleton="isLoadingNow; width: '12rem'; isRound: true"
     [src]="isLoggedIn ? userData?.avatar_url : '/assets/user.png'"
@@ -6,7 +6,7 @@
     class="border-2 rounded-full w-48 aspect-square" />
   <div
     *ngIf="isLoadingNow || isLoggedIn; else notLoggedIn"
-    class="flex flex-col justify-around ml-8">
+    class="flex flex-col justify-around text-center sm:text-left gap-4">
     <h2
       *appSkeleton="isLoadingNow; width: '250px'; height: '30px'"
       class="font-bold text-4xl">
@@ -26,7 +26,7 @@
 </div>
 
 <ng-template #notLoggedIn>
-  <div class="flex flex-col justify-around ml-8">
+  <div class="flex flex-col justify-around text-center sm:text-left gap-4">
     <h2 class="font-semibold text-3xl">Похоже, вы не авторизовались</h2>
     <h3 class="text-2xl">Для авторизации нажмите на кнопку войти</h3>
   </div>

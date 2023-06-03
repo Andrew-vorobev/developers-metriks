@@ -1,7 +1,7 @@
-<div class="max-w-xl mx-auto mb-14">
-  <h2 class="text-2xl font-semibold pl-24 mb-4">Найти пользователя</h2>
+<div class="mx-auto mb-14">
+  <h2 class="text-2xl font-semibold mb-4">Найти пользователя</h2>
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <div class="flex gap-8">
+    <div class="flex gap-4 flex-wrap">
       <input
         formControlName="id"
         name="id"
@@ -10,7 +10,7 @@
         placeholder="Введите имя или id пользователя" />
       <button
         type="submit"
-        class="flex-2 border-2 rounded-lg p-2 px-4 text-xl bg-green-500 text-white font-semibold">
+        class="flex-2 border border-green-500 hover:bg-green-400 transition-colors rounded-lg p-2 px-4 text-xl bg-green-500 text-white font-semibold w-full">
         Поиск
       </button>
     </div>

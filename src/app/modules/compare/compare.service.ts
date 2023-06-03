@@ -25,10 +25,11 @@ export class CompareService {
   private searchUsers: BehaviorSubject<UserDto[]> = new BehaviorSubject<
     UserDto[]
   >([]);
-  searchUsers$: Observable<UserDto[]> = this.searchUsers.asObservable();
-
-  isLoadingSearch$ = new BehaviorSubject<boolean>(false);
-  isLoadingUserStats$ = new BehaviorSubject<boolean>(false);
+  public searchUsers$: Observable<UserDto[]> = this.searchUsers.asObservable();
+  private _isLoadingSearch = new BehaviorSubject<boolean>(false);
+  private _isLoadingUserStats = new BehaviorSubject<boolean>(false);
+  public isLoadingSearch$ = this._isLoadingSearch.asObservable();
+  public isLoadingUserStats$ = this._isLoadingUserStats.asObservable();
 
   constructor(
     private gitlabService: GitlabService,
@@ -36,6 +37,7 @@ export class CompareService {
   ) {}
 
   findSearchUsers(data: { search: string }) {
+    this._isLoadingSearch.next(true);
     this.searchUsers.next([]);
     this.gitlabService
       .getUsers(data)
@@ -44,18 +46,23 @@ export class CompareService {
         take(5),
         reduce((acc: UserDto[], value) => [...acc, value], [])
       )
-      .subscribe(users => this.searchUsers.next(users));
+      .subscribe(users => {
+        this.searchUsers.next(users);
+        this._isLoadingSearch.next(false);
+      });
   }
 
   addUserToCompare(user: UserDto) {
-    this.isLoadingUserStats$.next(true);
+    this.searchUsers.next([]);
+    this._isLoadingUserStats.next(true);
     forkJoin([
       this.statisticService.getCommitsCount(user.id),
       this.statisticService.getMostActiveWeekDay(user.id),
       this.statisticService.getEditingStats(user.id),
+      this.statisticService.getReviewsCount(user.id),
     ])
       .pipe(
-        map(([commitsCount, mostActiveWeekday, editStats]) => {
+        map(([commitsCount, mostActiveWeekday, editStats, reviewsCount]) => {
           return {
             id: user.id,
             username: user.username,
@@ -63,16 +70,24 @@ export class CompareService {
             mostActiveWeekday,
             commitsCount,
             editStats,
+            reviewsCount,
           };
         }),
         catchError(err => {
-          this.isLoadingUserStats$.next(false);
+          this._isLoadingUserStats.next(false);
           throw 'bad';
         })
       )
       .subscribe(stats => {
         this.userStats.next([...this.userStats.value, stats]);
-        this.isLoadingUserStats$.next(false);
+        this._isLoadingUserStats.next(false);
       });
+  }
+
+  deleteUser(userId: number) {
+    console.log(this.userStats.value.filter(data => data.id === userId));
+    this.userStats.next(
+      this.userStats.value.filter(data => data.id !== userId)
+    );
   }
 }

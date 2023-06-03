@@ -1,18 +1,25 @@
-<div class="flex" *appLet="userService.userData as data">
+<div
+  class="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-8 lg:grid-cols-2"
+  *appLet="userService.userData as data">
   <img
     alt=""
-    class="border-2 border-gray-400 rounded-full w-40 h-40 aspect-square"
-    *appSkeleton="userService.isLoadingUserData; width: '10rem'; isRound: true"
+    class="border-2 border-gray-400 rounded-full w-48 h-48 col-span-1 mx-auto sm:mx-0"
+    *appSkeleton="
+      userService.isLoadingUserData;
+      classes: 'w-48 h-48 aspect-square col-span-1 mx-auto sm:mx-0';
+      isRound: true
+    "
     [src]="
       userService.isLoadingUserData ? '/assets/user.png' : data.avatar_url
     " />
-  <div class="flex flex-col justify-around ml-8">
+  <div
+    class="flex flex-col justify-around col-span-1 sm:col-span-2 lg:col-span-1 gap-2 text-center sm:text-left">
     <h3
       class="font-semibold text-2xl"
       *appSkeleton="
         userService.isLoadingUserData;
-        width: '250px';
-        height: '25px'
+        width: '100%';
+        height: '32px'
       ">
       {{ data.name }}
     </h3>
@@ -21,8 +28,8 @@
       class="font-semibold text-2xl"
       *appSkeleton="
         userService.isLoadingUserData;
-        width: '350px';
-        height: '25px'
+        width: '100%';
+        height: '32px'
       ">
       {{ data.username }} - {{ data.id }}
     </a>
@@ -30,8 +37,8 @@
       class="text-2xl"
       *appSkeleton="
         userService.isLoadingUserData;
-        width: '250px';
-        height: '25px'
+        width: '100%';
+        height: '32px'
       ">
       {{ data.public_email ?? 'Почта скрыта' }}
     </address>

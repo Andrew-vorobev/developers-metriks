@@ -7,24 +7,26 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class GitlabAuthService {
-  public isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+  private _isLoggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false
   );
+  public isLoggedIn$ = this._isLoggedIn.asObservable();
+
   constructor(private oAuthService: OAuthService) {
     oAuthService.configure(authCodeFlowConfig);
     oAuthService.loadDiscoveryDocumentAndTryLogin().then();
-    this.isLogged.next(oAuthService.hasValidAccessToken());
+    this._isLoggedIn.next(oAuthService.hasValidAccessToken());
   }
 
   public login() {
     this.oAuthService.setupAutomaticSilentRefresh();
     this.oAuthService.initCodeFlow();
-    this.isLogged.next(this.oAuthService.hasValidAccessToken());
+    this._isLoggedIn.next(this.oAuthService.hasValidAccessToken());
   }
 
   public logout() {
     this.oAuthService.revokeTokenAndLogout().then(() => {
-      this.isLogged.next(this.oAuthService.hasValidAccessToken());
+      this._isLoggedIn.next(this.oAuthService.hasValidAccessToken());
     });
   }
 

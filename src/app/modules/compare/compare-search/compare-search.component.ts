@@ -1,16 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CompareService } from '../compare.service';
-import {
-  AbstractControl,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-compare-search',
   templateUrl: './compare-search.component.html',
-  styleUrls: ['./compare-search.component.css'],
 })
 export class CompareSearchComponent implements OnInit {
   form!: FormGroup;

@@ -1,6 +1,6 @@
 export interface IUserStat {
-  id?: number;
-  username?: string;
+  id: number;
+  username: string;
   avatar_url?: string;
   mostActiveWeekday: number;
   editStats: number[];

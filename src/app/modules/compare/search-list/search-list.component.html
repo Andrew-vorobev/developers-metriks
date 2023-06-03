@@ -2,11 +2,17 @@
   <li
     *ngFor="let user of compareService.searchUsers$ | async"
     (click)="addUserToCompare(user)"
-    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer">
-    <div class="w-1/12 items-center shrink-0">
-      <img [src]="user.avatar_url" alt="user-logo" class="h-10 aspect-square" />
-    </div>
-    <p class="w-3/12 shrink-0">{{ user.username }}</p>
-    <p class="shrink-0">{{ user.name }}</p>
+    class="grid grid-cols-5 sm:grid-cols-7 border-t-2 border-l-2 border-r-2 overflow-hidden last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer">
+    <img
+      [src]="user.avatar_url"
+      alt="user-logo"
+      class="h-10 aspect-square row-span-2 sm:row-span-1" />
+    <p class="col-span-3">{{ user.username }}</p>
+    <p class="col-span-3">{{ user.name }}</p>
+  </li>
+  <li
+    *ngIf="compareService.isLoadingSearch$ | async"
+    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 py-4 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer animate-pulse bg-gray-200">
+    Загрузка
   </li>
 </ul>
