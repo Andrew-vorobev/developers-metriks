@@ -1,0 +1,9 @@
+.commit-item:before {
+  position: relative;
+  width: 6px;
+  left: 0;
+  top: 3px;
+  content: '';
+  background-color: #c7c7c7;
+  border-radius: 8px;
+}
