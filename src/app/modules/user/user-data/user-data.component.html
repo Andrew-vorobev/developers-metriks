@@ -1,0 +1,39 @@
+<div class="flex" *appLet="userService.userData as data">
+  <img
+    alt=""
+    class="border-2 border-gray-400 rounded-full w-40 h-40 aspect-square"
+    *appSkeleton="userService.isLoadingUserData; width: '10rem'; isRound: true"
+    [src]="
+      userService.isLoadingUserData ? '/assets/user.png' : data.avatar_url
+    " />
+  <div class="flex flex-col justify-around ml-8">
+    <h3
+      class="font-semibold text-2xl"
+      *appSkeleton="
+        userService.isLoadingUserData;
+        width: '250px';
+        height: '25px'
+      ">
+      {{ data.name }}
+    </h3>
+    <a
+      [href]="data.web_url"
+      class="font-semibold text-2xl"
+      *appSkeleton="
+        userService.isLoadingUserData;
+        width: '350px';
+        height: '25px'
+      ">
+      {{ data.username }} - {{ data.id }}
+    </a>
+    <address
+      class="text-2xl"
+      *appSkeleton="
+        userService.isLoadingUserData;
+        width: '250px';
+        height: '25px'
+      ">
+      {{ data.public_email ?? 'Почта скрыта' }}
+    </address>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+<ng-container *appLet="userService.userStats as stats">
+  <div class="flex flex-col justify-between">
+    <h3
+      class="font-medium text-base"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '250px';
+        height: '20px'
+      ">
+      Языки программирования:
+    </h3>
+    <div
+      class="mb-2 mt-[-1.2rem]"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '200px';
+        height: '18px'
+      ">
+      • {{ stats.programingLanguages | sequence }}
+    </div>
+    <h3
+      class="font-medium text-base"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '250px';
+        height: '20px'
+      ">
+      Самый активный день: <br />
+    </h3>
+    <div
+      class="font-normal mt-[-1.2rem]"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '180px';
+        height: '18px'
+      ">
+      • {{ stats.mostActiveWeekday | weekday }}
+    </div>
+  </div>
+  <div class="flex flex-col justify-between">
+    <h3
+      class="font-medium text-base"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '250px';
+        height: '20px'
+      ">
+      Общее число коммитов: <b class="text-lg">{{ stats.commitsCount }}</b>
+    </h3>
+    <div
+      class="font-normal text-sm text-gray-600 mt-[-2rem]"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '180px';
+        height: '16px'
+      ">
+      • {{ stats.editStats[0] }} строк(-и) добавлено
+    </div>
+    <div
+      class="font-normal text-sm text-gray-600 mt-[-2.5rem]"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '180px';
+        height: '16px'
+      ">
+      • {{ stats.editStats[1] }} строк(-и) удалено
+    </div>
+    <h3
+      class="font-medium text-base"
+      *appSkeleton="
+        userService.isLoadingUserStats;
+        width: '250px';
+        height: '20px'
+      ">
+      Общее число код-ревью: <b class="text-lg">{{ stats.reviewsCount }}</b>
+    </h3>
+  </div>
+</ng-container>
