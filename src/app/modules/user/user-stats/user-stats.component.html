@@ -1,78 +1,83 @@
 <ng-container *appLet="userService.userStats as stats">
-  <div class="flex flex-col justify-between">
+  <div class="flex flex-col gap-2">
     <h3
-      class="font-medium text-base"
+      class="font-medium text-base text-lg"
       *appSkeleton="
         userService.isLoadingUserStats;
-        width: '250px';
-        height: '20px'
+        width: '100%';
+        height: '28px'
       ">
       Языки программирования:
     </h3>
     <div
-      class="mb-2 mt-[-1.2rem]"
+      class="text-md"
       *appSkeleton="
         userService.isLoadingUserStats;
-        width: '200px';
-        height: '18px'
+        width: '66.666%';
+        height: '24px'
       ">
       • {{ stats.programingLanguages | sequence }}
     </div>
+  </div>
+  <div class="flex flex-col gap-2">
     <h3
       class="font-medium text-base"
       *appSkeleton="
         userService.isLoadingUserStats;
-        width: '250px';
-        height: '20px'
+        width: '100%';
+        height: '28px'
       ">
       Самый активный день: <br />
     </h3>
     <div
-      class="font-normal mt-[-1.2rem]"
+      class="font-normal"
       *appSkeleton="
         userService.isLoadingUserStats;
         width: '180px';
-        height: '18px'
+        height: '24px'
       ">
       • {{ stats.mostActiveWeekday | weekday }}
     </div>
   </div>
-  <div class="flex flex-col justify-between">
+  <div class="flex flex-col gap-2">
     <h3
-      class="font-medium text-base"
+      class="font-medium text-base text-lg"
       *appSkeleton="
         userService.isLoadingUserStats;
-        width: '250px';
-        height: '20px'
+        width: '100%';
+        height: '28px'
       ">
-      Общее число коммитов: <b class="text-lg">{{ stats.commitsCount }}</b>
+      Общее число коммитов:
+      {{ stats.commitsCount }}
     </h3>
     <div
-      class="font-normal text-sm text-gray-600 mt-[-2rem]"
+      class="font-normal text-sm text-gray-600"
       *appSkeleton="
         userService.isLoadingUserStats;
         width: '180px';
-        height: '16px'
+        height: '20px'
       ">
       • {{ stats.editStats[0] }} строк(-и) добавлено
     </div>
     <div
-      class="font-normal text-sm text-gray-600 mt-[-2.5rem]"
+      class="font-normal text-sm text-gray-600"
       *appSkeleton="
         userService.isLoadingUserStats;
         width: '180px';
-        height: '16px'
+        height: '20px'
       ">
       • {{ stats.editStats[1] }} строк(-и) удалено
     </div>
+  </div>
+  <div>
     <h3
-      class="font-medium text-base"
+      class="font-medium text-base text-lg"
       *appSkeleton="
         userService.isLoadingUserStats;
-        width: '250px';
-        height: '20px'
+        width: '100%';
+        height: '28px'
       ">
-      Общее число код-ревью: <b class="text-lg">{{ stats.reviewsCount }}</b>
+      Общее число код-ревью: {{ stats.reviewsCount }}
     </h3>
   </div>
 </ng-container>

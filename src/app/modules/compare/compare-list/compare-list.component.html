@@ -1,16 +1,62 @@
-<ul class="flex flex-col shrink-0">
-  <li
+<!--<ul class="flex flex-col shrink-0">-->
+<!--  <li-->
+<!--    *ngFor="let user of compareService.userStats$ | async"-->
+<!--    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer">-->
+<!--    <div class="w-1/12 items-center shrink-0">-->
+<!--      <img [src]="user.avatar_url" alt="user-logo" class="h-10 aspect-square" />-->
+<!--    </div>-->
+<!--    <p class="w-3/12 shrink-0">{{ user.username }}</p>-->
+<!--    <p class="shrink-0">{{ user.editStats }}</p>-->
+<!--  </li>-->
+<!--  <li-->
+<!--    *ngIf="compareService.isLoadingUserStats$ | async"-->
+<!--    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 py-4 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer animate-pulse bg-gray-200">-->
+<!--    Загрузка-->
+<!--  </li>-->
+<!--</ul>-->
+
+<div
+  class="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+  <!--  <div-->
+  <!--    class="p-6 rounded-2xl shadow-2xl grid grid-cols-4 hover:scale-105 cursor-pointer transition-transform"-->
+  <!--    *ngFor="let user of compareService.userStats$ | async"-->
+  <!--    [routerLink]="['/users', 'user', user.username]">-->
+  <!--    -->
+  <!--  </div>-->
+  <app-compare-user
+    [userData]="user"
     *ngFor="let user of compareService.userStats$ | async"
-    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer">
-    <div class="w-1/12 items-center shrink-0">
-      <img [src]="user.avatar_url" alt="user-logo" class="h-10 aspect-square" />
+    class="p-6 rounded-2xl shadow-2xl grid grid-cols-4 overflow-hidden" />
+  <div
+    class="p-6 rounded-2xl shadow-2xl grid grid-cols-4 overflow-hidden"
+    *ngIf="compareService.isLoadingUserStats$ | async">
+    <div
+      alt="user-logo"
+      class="w-36 h-36 bg-gray-300 animate-pulse rounded-full border mx-auto col-span-4 mb-4 cursor-pointer hover:scale-105 transition-transform"></div>
+    <h2
+      class="col-span-4 text-4xl font-semibold text-center mb-2 bg-gray-300 animate-pulse rounded-2xl">
+      ⠀
+    </h2>
+    <div class="col-span-2 bg-gray-300 animate-pulse rounded-2xl">
+      <h3>⠀</h3>
+      <h3>⠀</h3>
     </div>
-    <p class="w-3/12 shrink-0">{{ user.username }}</p>
-    <p class="shrink-0">{{ user.editStats }}</p>
-  </li>
-  <li
-    *ngIf="compareService.isLoadingUserStats$ | async"
-    class="flex border-t-2 border-l-2 border-r-2 last:border-b-2 first:rounded-t-lg last:rounded-b-lg p-2 py-4 items-center shrink-0 hover:bg-gray-200 transition-colors cursor-pointer animate-pulse bg-gray-200">
-    Загрузка
-  </li>
-</ul>
+    <div class="col-span-2 bg-gray-300 animate-pulse rounded-2xl">
+      <h3>⠀</h3>
+      <h3>⠀</h3>
+    </div>
+    <div class="col-span-4 my-1 bg-gray-300 animate-pulse rounded-2xl">
+      <h3>⠀</h3>
+      <h3>⠀</h3>
+    </div>
+    <div
+      class="col-span-4 grid grid-cols-4 bg-gray-300 animate-pulse rounded-2xl">
+      <h3 class="col-span-3">⠀</h3>
+      <h3 class="col-span-3">⠀</h3>
+    </div>
+    <button
+      class="bg-gray-300 animate-pulse col-span-4 mt-2 py-1 rounded-2xl border border-gray-300">
+      ⠀
+    </button>
+  </div>
+</div>

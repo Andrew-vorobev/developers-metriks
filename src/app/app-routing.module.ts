@@ -4,6 +4,11 @@ import { NotfoundComponent } from './notfound/notfound.component';
 
 const routes: Routes = [
   {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'users/welcome',
+  },
+  {
     path: 'auth',
     loadChildren: () =>
       import('./modules/auth/auth.module').then(m => m.AuthModule),

@@ -17,6 +17,7 @@ export class SkeletonDirective implements OnChanges {
   @Input('appSkeletonWidth') width: string;
   @Input('appSkeletonHeight') height: string;
   @Input('appSkeletonIsRound') isRound = false;
+  @Input('appSkeletonClasses') classes: string;
 
   constructor(
     private templateRef: TemplateRef<any>,
@@ -35,6 +36,7 @@ export class SkeletonDirective implements OnChanges {
           width: this.width,
           height: this.height,
           isRound: this.isRound,
+          classes: this.classes,
         });
       } else {
         this.ViewContainerRef.createEmbeddedView(this.templateRef);

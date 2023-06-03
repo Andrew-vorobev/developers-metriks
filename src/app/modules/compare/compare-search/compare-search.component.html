@@ -1,13 +1,14 @@
 <form [formGroup]="form" (submit)="submit()" class="mb-10">
-  <div class="flex gap-8">
+  <h2 class="text-2xl font-semibold mb-4">Сравнение пользователей</h2>
+  <div class="flex gap-2 flex-wrap items-stretch justify-stretch">
     <input
       formControlName="search"
       name="search"
       id="search"
-      class="border-2 rounded-lg p-2 text-xl flex-1" />
+      class="border-2 rounded-lg p-2 text-xl flex-1 sm:w-4/6 md:w-5/6" />
     <button
       type="submit"
-      class="flex-2 border-2 rounded-lg p-2 px-4 text-xl bg-green-500 text-white font-semibold">
+      class="flex-2 border border-green-500 rounded-lg py-2 px-4 text-xl sm:w-2/6 md:w-1/6 bg-green-500 text-white font-semibold w-full hover:bg-green-400 transition-colors">
       Поиск
     </button>
   </div>

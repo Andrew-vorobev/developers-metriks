@@ -1,20 +1,37 @@
 <ng-container *appLet="userService.commits as commits">
-  <h2 class="font-semibold text-2xl mb-6 pl-10">
-    Коммиты пользователя:
-    <ng-container *ngIf="!userService.isLoadingUserCommits">
-      <span class="font-normal text-sm text-gray-600 ml-8 mr-4">
+  <div class="flex flex-col gap-2 sm:flex-row sm:gap-8 sm:items-baseline">
+    <h2
+      *appSkeleton="
+        userService.isLoadingUserCommits;
+        classes: 'mb-2 h-9 sm:w-[270px] rounded-full'
+      "
+      class="font-semibold text-2xl">
+      Коммиты пользователя:
+    </h2>
+    <div class="flex flex-col gap-4 sm:flex-row">
+      <span
+        *appSkeleton="
+          userService.isLoadingUserCommits;
+          classes: 'h-5 w-4/6 sm:w-[60px] rounded-full'
+        "
+        class="font-normal text-sm text-gray-600">
         Всего: {{ commits.length }}
       </span>
-      <span class="font-normal text-sm text-gray-600">
+      <span
+        *appSkeleton="
+          userService.isLoadingUserCommits;
+          classes: 'h-5 w-5/6 sm:w-[80px] rounded-full'
+        "
+        class="font-normal text-sm text-gray-600">
         Показано:
         {{
-          commits.length > userService.visibleCommitsCount
-            ? userService.visibleCommitsCount
+          commits.length > userService.visibleProjectsCount
+            ? userService.visibleProjectsCount
             : commits.length
         }}
       </span>
-    </ng-container>
-  </h2>
+    </div>
+  </div>
   <ul
     class="flex flex-col gap-4"
     *ngIf="!userService.isLoadingUserCommits; else userCommitsLoading">

@@ -1,0 +1,29 @@
+<img
+  [src]="userData.avatar_url"
+  [routerLink]="['/users', 'user', userData.username]"
+  alt="user-logo"
+  class="w-36 rounded-full border mx-auto col-span-4 mb-4 cursor-pointer hover:scale-105 transition-transform" />
+<h2 class="col-span-4 text-4xl font-semibold text-center mb-2">
+  {{ userData.username }}
+</h2>
+<div class="col-span-2">
+  <h3>Добавлено строк</h3>
+  {{ userData.editStats[0] }}
+</div>
+<div class="col-span-2">
+  <h3>Удалено строк</h3>
+  {{ userData.editStats[1] }}
+</div>
+<div class="col-span-3 my-1">
+  <h3>Самый активный день</h3>
+  {{ userData.mostActiveWeekday | weekday }}
+</div>
+<div class="col-span-4 grid grid-cols-4">
+  <h3 class="col-span-3">Количество код-ревью</h3>
+  <p class="col-span-1">{{ userData.reviewsCount }}</p>
+</div>
+<button
+  (click)="deleteUser(userData.id)"
+  class="bg-red-400 col-span-4 mt-2 py-1 rounded-2xl border border-red-400 hover:bg-white hover:text-red-400 transition-colors">
+  Удалить
+</button>

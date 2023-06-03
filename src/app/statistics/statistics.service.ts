@@ -31,6 +31,9 @@ export class StatisticsService {
       ),
       map(obj => {
         let result = ['0', -1];
+        if (Object.values(obj).every(a => a === 0)) {
+          return 7;
+        }
         Object.entries(obj).forEach(([weekday, eventsCount]) => {
           if (eventsCount > result[1]) result = [weekday, eventsCount];
         });
@@ -44,6 +47,7 @@ export class StatisticsService {
     return this.gitlabService
       .getProjects({ authorId, membership: !authorId })
       .pipe(
+        tap(e => console.log(e)),
         mergeAll(),
         mergeMap(project => {
           return this.gitlabService.getCommitsExtended(project.id);

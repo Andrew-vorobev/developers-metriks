@@ -1,15 +1,13 @@
 <header>
-  <div class="container mx-auto py-6">
+  <div class="container mx-auto py-6 px-8">
     <div class="flex justify-between align-middle">
       <a routerLink="">
         <h1 class="font-extrabold uppercase text-2xl">Developer metrics</h1>
       </a>
-      <nav>
+      <nav class="hidden lg:block">
         <ul class="flex gap-12">
           <li>
-            <a routerLink="users/home" class="text-lg cursor-pointer"
-              >На&nbsp;главную</a
-            >
+            <a routerLink="/" class="text-lg cursor-pointer">На&nbsp;главную</a>
           </li>
           <li>
             <a routerLink="compare" class="text-lg cursor-pointer">Сравнение</a>
@@ -24,7 +22,7 @@
     </div>
   </div>
 </header>
-<main class="container mx-auto py-6">
+<main class="container mx-auto py-6 px-8">
   <router-outlet class="w-full"></router-outlet>
   <app-error-notification></app-error-notification>
 </main>
