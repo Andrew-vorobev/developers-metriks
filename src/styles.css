@@ -3,3 +3,21 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --link-hover: #5050bb;
+  --link-active: #21218f;
+  --list-item-focus: #6e6ebb;
+}
+
+.link {
+  transition: color 0.3s linear;
+}
+
+.link:hover,
+.link:focus {
+  color: var(--link-hover);
+}
+
+.link:active {
+  color: var(--link-hover);
+}

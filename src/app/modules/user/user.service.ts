@@ -3,6 +3,7 @@ import {
   concatMap,
   firstValueFrom,
   forkJoin,
+  from,
   map,
   mergeAll,
   mergeMap,
@@ -11,8 +12,6 @@ import {
   Subject,
   Subscription,
   take,
-  takeUntil,
-  tap,
 } from 'rxjs';
 import { GitlabService } from '../../statistics/gitlab.service';
 import { StatisticsService } from '../../statistics/statistics.service';
@@ -32,17 +31,19 @@ export class UserService {
   public userData: UserExtraDto;
   public userStats: IUserStat;
 
-  public projects: ProjectDto[];
-  public commits: CommitExtraDto[];
   private _projectsReady = new Subject<void>();
   private _projectsReady$ = this._projectsReady.asObservable();
+  public projects: ProjectDto[];
+  public commits: CommitExtraDto[];
   public visibleProjectsCount = 4;
   public visibleCommitsCount = 8;
+  public projectNameById: { [key: number]: string };
 
   public isUserExist = true;
   public isLoadingUserData = true;
   public isLoadingUserStats = true;
   public isLoadingUserProjects = true;
+  public isLoadingUserProjectsLanguages = true;
   public isLoadingUserCommits = true;
   private _subs: Subscription[];
 
@@ -55,9 +56,10 @@ export class UserService {
   private _subscribeOnUserData(): void {
     this._subs?.forEach(sub => sub.unsubscribe());
     this._subs = [
-      this.userDataLoaded$.subscribe(() => this._setUserStats()),
-      this.userDataLoaded$.subscribe(() => this._setUserProjects()),
-      this._projectsReady$.subscribe(() => this._setUserCommits()),
+      this.userDataLoaded$.subscribe(() => this._updateUserStats()),
+      this.userDataLoaded$.subscribe(() => this._updateUserProjects()),
+      this._projectsReady$.subscribe(() => this._updateUserProjectsLanguages()),
+      this._projectsReady$.subscribe(() => this._updateUserCommits()),
     ];
   }
 
@@ -69,6 +71,7 @@ export class UserService {
     this.isLoadingUserData = true;
     this.isLoadingUserStats = true;
     this.isLoadingUserProjects = true;
+    this.isLoadingUserProjectsLanguages = true;
     this.isLoadingUserCommits = true;
     this.projects = [];
     this.commits = [];
@@ -120,7 +123,7 @@ export class UserService {
       });
   }
 
-  private _setUserStats(): void {
+  private _updateUserStats(): void {
     this.isLoadingUserStats = true;
     firstValueFrom(
       forkJoin([
@@ -158,7 +161,7 @@ export class UserService {
       });
   }
 
-  private _setUserProjects(): void {
+  private _updateUserProjects(): void {
     firstValueFrom(
       this._gitlabService.getProjects({
         authorId: this.userData.id,
@@ -166,6 +169,10 @@ export class UserService {
       })
     )
       .then(projects => {
+        this.projectNameById = {};
+        projects.forEach(
+          project => (this.projectNameById[project.id] = project.name as string)
+        );
         this.projects = projects;
         this.isLoadingUserProjects = false;
         this._projectsReady.next();
@@ -177,7 +184,46 @@ export class UserService {
       });
   }
 
-  private _setUserCommits(): void {
+  private _updateUserProjectsLanguages(): void {
+    if (this.projects.length === 0) {
+      this.commits = [];
+      this.isLoadingUserProjectsLanguages = false;
+      return;
+    }
+
+    let i = 0;
+    this._subs.push(
+      from(this.projects)
+        .pipe(
+          concatMap(project =>
+            this._gitlabService.getProgramingLanguages(project.id)
+          )
+        )
+        .subscribe({
+          next: languages => {
+            this.projects[i++].languages = this._concatLanguagesPercent(
+              Object.entries(languages)
+            );
+            this.isLoadingUserProjectsLanguages = false;
+          },
+          error: () => {
+            throw new Error(
+              'Не удалось получить данные о языках программирования проектов пользователя'
+            );
+          },
+        })
+    );
+  }
+
+  private _concatLanguagesPercent(languages: [string, number][]): string[] {
+    const result = [];
+    for (const [language, percent] of languages) {
+      result.push(`${language} (${Math.floor(percent)}%)`);
+    }
+    return result;
+  }
+
+  private _updateUserCommits(): void {
     if (this.projects.length === 0) {
       this.commits = [];
       this.isLoadingUserCommits = false;
@@ -192,17 +238,25 @@ export class UserService {
       )
     )
       .then(commits => {
-        commits.sort((a, b) => {
-          return (
-            new Date(b.committed_date).getTime() -
-            new Date(a.committed_date).getTime()
-          );
-        });
+        this._sortCommitsByDate(commits);
+        commits.forEach(
+          commit =>
+            (commit.project_name = this.projectNameById[commit.project_id])
+        );
         this.commits = commits;
         this.isLoadingUserCommits = false;
       })
       .catch(() => {
         throw new Error('Не удалось получить данные о коммитах пользователя');
       });
+  }
+
+  private _sortCommitsByDate(commits: CommitExtraDto[]): void {
+    commits.sort((a, b) => {
+      return (
+        new Date(b.committed_date).getTime() -
+        new Date(a.committed_date).getTime()
+      );
+    });
   }
 }

@@ -36,10 +36,10 @@
   <ul
     class="flex flex-col gap-4"
     *ngIf="!userService.isLoadingUserProjects; else userProjectsLoading">
-    <li class="flex project-item static" *ngFor="let project of projects">
+    <li class="flex static project-item" *ngFor="let project of projects">
       <div class="flex gap-32 pl-8">
         <div class="flex flex-col">
-          <h3 class="font-semibold text-2xl mb-4">
+          <h3 class="font-semibold text-2xl mb-4 link">
             <a [href]="project.web_url">{{ project.name }}</a>
           </h3>
           <h4 class="font-normal text-sm text-gray-600 mb-1">
@@ -71,14 +71,26 @@
         <div class="flex flex-col justify-center">
           <h3 class="font-medium text-xl mb-3">
             Темы:
-            <span class="font-normal text-xl pl-3">
+            <span class="font-normal text-lg pl-3">
               {{ project.topics | sequence }}
             </span>
           </h3>
-          <h3 class="font-medium text-xl">
+          <h3 class="font-medium text-xl mb-3">
             Теги:
-            <span class="font-normal text-xl pl-3">
+            <span class="font-normal text-lg pl-3">
               {{ project.tag_list | sequence }}
+            </span>
+          </h3>
+          <h3
+            class="font-medium text-xl"
+            *appSkeleton="
+              userService.isLoadingUserProjectsLanguages;
+              width: '200px';
+              height: '18px'
+            ">
+            Языки:
+            <span class="font-normal text-base pl-3">
+              {{ project.languages | sequence }}
             </span>
           </h3>
         </div>

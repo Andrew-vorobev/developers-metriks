@@ -23,4 +23,5 @@ export class ProjectDto {
   public tag_list?: string[];
   public web_url?: string;
   public visibility?: string;
+  public languages?: string[];
 }
