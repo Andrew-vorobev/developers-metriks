@@ -2,7 +2,7 @@
   class="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-8 lg:grid-cols-2"
   *appLet="userService.userData as data">
   <img
-    alt=""
+    alt="Аватарка пользователя"
     class="border-2 border-gray-400 rounded-full w-48 h-48 col-span-1 mx-auto sm:mx-0"
     *appSkeleton="
       userService.isLoadingUserData;
@@ -25,7 +25,7 @@
     </h3>
     <a
       [href]="data.web_url"
-      class="font-semibold text-2xl"
+      class="font-semibold text-2xl link"
       *appSkeleton="
         userService.isLoadingUserData;
         width: '100%';

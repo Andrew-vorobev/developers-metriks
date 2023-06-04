@@ -30,7 +30,7 @@ import { ERROR_LOGGER } from './errors/error-handler/error-logger.interface';
   providers: [
     GitlabService,
     { provide: ErrorHandler, useClass: GlobalErrorHandlerService },
-    { provide: ERROR_LOGGER, useExisting: ErrorConsoleLoggerService }, // ErrorConsoleLoggerService
+    { provide: ERROR_LOGGER, useExisting: ErrorNotificationService }, // ErrorConsoleLoggerService
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpInterceptorService,

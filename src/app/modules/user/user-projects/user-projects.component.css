@@ -6,4 +6,9 @@
   content: '';
   background-color: #c7c7c7;
   border-radius: 8px;
+  transition: background-color 0.2s linear;
+}
+
+.project-item:hover:before {
+  background-color: var(--list-item-focus);
 }
