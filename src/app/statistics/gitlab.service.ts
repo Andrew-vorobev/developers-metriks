@@ -131,8 +131,10 @@ export class GitlabService {
     );
   }
 
-  public getProgramingLanguages(projectId: number): Observable<any> {
-    return this.httpClient.get(
+  public getProgramingLanguages(
+    projectId: number
+  ): Observable<{ [key: string]: number }> {
+    return this.httpClient.get<{ [key: string]: number }>(
       `https://gitlab.com/api/v4/projects/${projectId}/languages`
     );
   }

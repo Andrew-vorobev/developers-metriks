@@ -24,5 +24,6 @@ export class CommitExtraDto {
   };
   status: string;
   web_url: string;
-  project_id: string;
+  project_id: number;
+  project_name?: string;
 }

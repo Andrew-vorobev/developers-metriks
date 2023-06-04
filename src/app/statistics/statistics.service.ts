@@ -71,7 +71,7 @@ export class StatisticsService {
         mergeMap(project => {
           return this.gitlabService.getProgramingLanguages(project.id);
         }),
-        reduce((data: Set<string>, languages: any) => {
+        reduce((data: Set<string>, languages: { [key: string]: number }) => {
           Object.keys(languages).forEach(language => data.add(language));
           return data;
         }, new Set<string>())

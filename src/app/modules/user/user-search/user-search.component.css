@@ -1,0 +1,13 @@
+.search-input {
+  outline-color: white;
+  transition: outline 0.3s linear;
+}
+
+.search-input:hover,
+.search-input:focus {
+  outline: whitesmoke solid 3px;
+}
+
+.search-input:active {
+  outline: #eaeaea solid 3px;
+}

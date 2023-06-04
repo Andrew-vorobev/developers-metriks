@@ -25,8 +25,8 @@
         class="font-normal text-sm text-gray-600">
         Показано:
         {{
-          commits.length > userService.visibleProjectsCount
-            ? userService.visibleProjectsCount
+          commits.length > userService.visibleCommitsCount
+            ? userService.visibleCommitsCount
             : commits.length
         }}
       </span>
@@ -35,21 +35,21 @@
   <ul
     class="flex flex-col gap-4"
     *ngIf="!userService.isLoadingUserCommits; else userCommitsLoading">
-    <li class="flex commit-item static" *ngFor="let commit of commits">
+    <li class="flex static commit-item" *ngFor="let commit of commits">
       <div class="w-full flex pl-8">
         <div class="flex flex-col w-[30%]">
-          <h3 class="font-semibold text-2xl mb-4">
+          <h3 class="font-semibold text-2xl mb-4 link">
             <a [href]="commit.web_url">{{ commit.title }}</a>
           </h3>
           <h4 class="font-normal text-sm text-gray-600 mb-1">
             • Создан: {{ commit.created_at | date : 'medium' : 'UTC+3' }}
           </h4>
-          <h4 class="font-normal text-sm text-gray-600 mb-3">
+          <h4 class="font-normal text-sm text-gray-600 mb-3 link">
             <a
               [href]="
                 'https://gitlab.com/api/v4/projects/' + commit.project_id
               ">
-              • Проект: {{ commit.project_id }}
+              • Проект: {{ commit.project_name }}
             </a>
           </h4>
         </div>
