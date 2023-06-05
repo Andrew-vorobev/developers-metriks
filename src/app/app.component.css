@@ -8,3 +8,41 @@ p, h1, h2, h3, h4, h5, h6 {
   margin: 0;
   padding: 0;
 }
+.nav{
+  display: none;
+}
+@media screen and (max-width: 1023px) {
+  .nav{
+  display: flex;
+  flex-direction: column;
+}
+.nav span{
+  width: 25px;
+  height: 2px;
+  background-color: black;
+  margin-top: 6px;
+  margin-left: auto;
+}
+.nav .pages{
+  display: none;
+  margin-top: 12px;
+}
+.nav:hover .line1{
+  transition-duration: 0.5s;
+  transform: rotate(45deg);
+  margin-top: 11px;
+}
+.nav:hover .line2{
+  transition-duration: 0.1s;
+  opacity: 0;
+}
+.nav:hover .line3{
+  transition-duration: 0.5s;
+  transform: rotate(-45deg);
+  margin-top: -10px;
+}
+.nav:hover .pages{
+  display: block;
+}
+
+}
