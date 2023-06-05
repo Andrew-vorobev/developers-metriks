@@ -8,7 +8,4 @@ import { OAuthService } from 'angular-oauth2-oidc';
 })
 export class WelcomeComponent {
   constructor(private OAuthService: OAuthService) {}
-  onLogin() {
-    console.log(this.OAuthService.getIdentityClaims());
-  }
 }
