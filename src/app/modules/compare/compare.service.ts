@@ -3,6 +3,7 @@ import { GitlabService } from '../../statistics/gitlab.service';
 import {
   BehaviorSubject,
   catchError,
+  filter,
   forkJoin,
   map,
   Observable,
@@ -43,6 +44,8 @@ export class CompareService {
       .getUsers(data)
       .pipe(
         switchAll(),
+        take(20),
+        filter(user => !this.userStats.value.some(ur => ur.id === user.id)),
         take(5),
         reduce((acc: UserDto[], value) => [...acc, value], [])
       )
