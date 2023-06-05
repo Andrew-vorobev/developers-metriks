@@ -1,5 +1,5 @@
 <ng-container *appLet="userService.commits as commits">
-  <div class="flex flex-col gap-2 sm:flex-row sm:gap-8 sm:items-baseline">
+  <div class="flex flex-col gap-2 sm:flex-row sm:gap-8 sm:items-baseline mb-2">
     <h2
       *appSkeleton="
         userService.isLoadingUserCommits;
@@ -36,8 +36,8 @@
     class="flex flex-col gap-4"
     *ngIf="!userService.isLoadingUserCommits; else userCommitsLoading">
     <li class="flex static commit-item" *ngFor="let commit of commits">
-      <div class="w-full flex pl-8">
-        <div class="flex flex-col w-[30%]">
+      <div class="w-full flex flex-col md:flex-row">
+        <div class="flex flex-col md:w-[30%]">
           <h3 class="font-semibold text-2xl mb-4 link">
             <a [href]="commit.web_url">{{ commit.title }}</a>
           </h3>
@@ -53,7 +53,7 @@
             </a>
           </h4>
         </div>
-        <div class="flex flex-col justify-center w-[45%] mx-auto">
+        <div class="flex flex-col justify-center md:w-[45%] md:mx-auto">
           <h3 class="font-medium text-xl mb-3">Описание:</h3>
           <p class="font-normal text-base">{{ commit.message }}</p>
         </div>
@@ -77,5 +77,66 @@
 </ng-container>
 
 <ng-template #userCommitsLoading>
-  <p class="font-medium text-lg pl-10 mb-14">Загрузка...</p>
+  <ul class="flex flex-col gap-4">
+    <li class="flex static commit-item">
+      <div class="w-full flex flex-col md:flex-row">
+        <div class="flex flex-col md:w-[30%]">
+          <h3
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-8 w-64 rounded-full font-normal text-sm text-gray-600 mb-1'
+            "
+            class="font-semibold text-2xl mb-4 link"></h3>
+          <h4
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-5 w-56 rounded-full font-normal text-sm text-gray-600 mb-1'
+            "
+            class="font-normal text-sm text-gray-600 mb-1"></h4>
+          <h4
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-5 w-56 rounded-full font-normal text-sm text-gray-600 mb-1'
+            "
+            class="font-normal text-sm text-gray-600 mb-3 link"></h4>
+        </div>
+        <div class="flex flex-col justify-center md:w-[45%] md:mx-auto">
+          <h3
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'flex flex-col justify-center md:w-[45%] md:mx-auto'
+            "
+            class="font-medium text-xl mb-3">
+            Описание:
+          </h3>
+          <p
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-6 w-48 rounded-full font-medium text-xl mb-3'
+            "
+            class="font-normal text-base"></p>
+          <p
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-6 w-48 rounded-full font-medium text-xl mb-3'
+            "
+            class="font-normal text-base"></p>
+        </div>
+        <div class="flex gap-10 items-center w-[8%]">
+          <div
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-16 w-10 rounded-full font-normal text-sm text-gray-600 mb-1'
+            "
+            class="flex flex-col items-center"></div>
+          <div
+            *appSkeleton="
+              userService.isLoadingUserProjects;
+              classes: 'h-16 w-10 rounded-full font-normal text-sm text-gray-600 mb-1'
+            "
+            class="flex flex-col items-center"></div>
+        </div>
+      </div>
+    </li>
+  </ul>
 </ng-template>

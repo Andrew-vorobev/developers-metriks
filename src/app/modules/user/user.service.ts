@@ -174,8 +174,9 @@ export class UserService {
           project => (this.projectNameById[project.id] = project.name as string)
         );
         this.projects = projects;
-        this.isLoadingUserProjects = false;
+
         this._projectsReady.next();
+        this.isLoadingUserProjects = false;
       })
       .catch(() => {
         throw new Error(

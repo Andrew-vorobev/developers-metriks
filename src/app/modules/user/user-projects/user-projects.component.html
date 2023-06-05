@@ -1,5 +1,5 @@
 <ng-container *appLet="userService.projects as projects">
-  <div class="flex flex-col gap-2 sm:flex-row sm:gap-8 sm:items-baseline">
+  <div class="flex flex-col gap-2 sm:flex-row sm:gap-8 sm:items-baseline mb-2">
     <h2
       *appSkeleton="
         userService.isLoadingUserProjects;
@@ -37,7 +37,7 @@
     class="flex flex-col gap-4"
     *ngIf="!userService.isLoadingUserProjects; else userProjectsLoading">
     <li class="flex static project-item" *ngFor="let project of projects">
-      <div class="flex gap-32 pl-8">
+      <div class="flex flex-col gap-4 md:flex-row md:gap-32">
         <div class="flex flex-col">
           <h3 class="font-semibold text-2xl mb-4 link">
             <a [href]="project.web_url">{{ project.name }}</a>
@@ -85,8 +85,7 @@
             class="font-medium text-xl"
             *appSkeleton="
               userService.isLoadingUserProjectsLanguages;
-              width: '200px';
-              height: '18px'
+              classes: 'font-normal text-base pl-3 w-48 h-6'
             ">
             Языки:
             <span class="font-normal text-base pl-3">
@@ -101,36 +100,78 @@
 
 <ng-template #userProjectsLoading>
   <li class="flex project-item static">
-    <div class="flex gap-32 pl-8">
+    <div class="flex flex-col gap-4 md:flex-row md:gap-32">
       <div class="flex flex-col">
-        <h3 class="font-semibold text-2xl mb-4"></h3>
-        <h4 class="font-normal text-sm text-gray-600 mb-1"></h4>
-        <h4 class="font-normal text-sm text-gray-600 mb-3"></h4>
-        <h4 class="font-normal text-sm text-gray-600"></h4>
+        <h3
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-8 w-56 rounded-full font-semibold text-2xl mb-4'
+          "
+          class="font-semibold text-2xl mb-4">
+          ⠀
+        </h3>
+        <h4
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-5 w-32 rounded-full font-normal text-sm text-gray-600 mb-1'
+          "
+          class="font-normal text-sm text-gray-600 mb-1">
+          ⠀
+        </h4>
+        <h4
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-5 w-48 rounded-full font-normal text-sm text-gray-600 mb-3'
+          "
+          class="font-normal text-sm text-gray-600 mb-3">
+          ⠀
+        </h4>
+        <h4
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-5 w-24 rounded-full font-normal text-sm text-gray-600'
+          "
+          class="font-normal text-sm text-gray-600">
+          ⠀
+        </h4>
       </div>
       <div class="flex gap-10 items-center">
-        <div class="flex flex-col items-center">
-          <span class="font-semibold text-4xl mt-[-5px]">★</span>
-          <span class="font-semibold text-2xl">0</span>
-        </div>
-        <div class="flex flex-col items-center">
-          <svg width="40" height="40" viewBox="0 0 20 25" fill="none">
-            <path
-              d="M7 5C7 3.89543 7.89543 3 9 3C10.1046 3 11 3.89543 11 5C11 5.74028 10.5978 6.38663 10 6.73244V14.0396H11.7915C12.8961 14.0396 13.7915 13.1441 13.7915 12.0396V10.7838C13.1823 10.4411 12.7708 9.78837 12.7708 9.03955C12.7708 7.93498 13.6662 7.03955 14.7708 7.03955C15.8753 7.03955 16.7708 7.93498 16.7708 9.03955C16.7708 9.77123 16.3778 10.4111 15.7915 10.7598V12.0396C15.7915 14.2487 14.0006 16.0396 11.7915 16.0396H10V17.2676C10.5978 17.6134 11 18.2597 11 19C11 20.1046 10.1046 21 9 21C7.89543 21 7 20.1046 7 19C7 18.2597 7.4022 17.6134 8 17.2676V6.73244C7.4022 6.38663 7 5.74028 7 5Z"
-              fill="#000000" />
-          </svg>
-          <span class="font-semibold text-2xl mr-[-1px]"> </span>
-        </div>
+        <div
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-16 w-8 rounded-full font-normal text-sm text-gray-600'
+          "
+          class="flex flex-col items-center"></div>
+        <div
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-16 w-8 rounded-full font-normal text-sm text-gray-600'
+          "
+          class="flex flex-col items-center"></div>
       </div>
       <div class="flex flex-col justify-center">
-        <h3 class="font-medium text-xl mb-3">
+        <h3
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-7 w-32 rounded-full font-medium text-xl mb-3'
+          "
+          class="font-medium text-xl mb-3">
           Темы:
-          <span class="font-normal text-xl pl-3"> </span>
         </h3>
-        <h3 class="font-medium text-xl">
+        <h3
+          *appSkeleton="
+            userService.isLoadingUserProjects;
+            classes: 'h-7 w-32 rounded-full font-medium text-xl mb-3'
+          "
+          class="font-medium text-xl">
           Теги:
-          <span class="font-normal text-xl pl-3"> </span>
         </h3>
+        <h3
+          class="font-medium text-xl"
+          *appSkeleton="
+            userService.isLoadingUserProjectsLanguages;
+            classes: 'font-normal text-base pl-3 w-48 h-6'
+          "></h3>
       </div>
     </div>
   </li>
