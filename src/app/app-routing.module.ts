@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NotfoundComponent } from './notfound/notfound.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -14,12 +15,8 @@ const routes: Routes = [
       import('./modules/auth/auth.module').then(m => m.AuthModule),
   },
   {
-    path: 'static',
-    loadChildren: () =>
-      import('./statistics/statistics.module').then(m => m.StatisticsModule),
-  },
-  {
     path: 'compare',
+    canActivate: [AuthGuard],
     loadChildren: () =>
       import('./modules/compare/compare.module').then(m => m.CompareModule),
   },
